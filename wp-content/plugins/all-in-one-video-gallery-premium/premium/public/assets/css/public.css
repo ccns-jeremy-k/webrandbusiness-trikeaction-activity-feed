@@ -1,0 +1,527 @@
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Thumbnail Generator
+ *
+ *--------------------------------------------------------------------------------------------*/
+#aiovg-thumbnail-generator .aiovg-inner-wrapper {
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    flex-wrap: wrap;
+    margin: 7px 0;
+}
+
+#aiovg-thumbnail-generator .aiovg-header {
+    margin-bottom: 0;
+}
+
+#aiovg-thumbnail-generator .aiovg-header span {
+    display: inline-block;
+    line-height: normal;
+    vertical-align: top;
+}
+
+#aiovg-thumbnail-generator .aiovg-body {
+    display: -webkit-flex; /* Safari */
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 7px -7px;
+}
+
+#aiovg-thumbnail-generator .aiovg-item {
+    width: 50%;
+}
+
+#aiovg-thumbnail-generator .aiovg-item-inner {
+    margin: 7px;
+    padding: 1px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+#aiovg-thumbnail-generator .aiovg-item-inner:hover {
+    box-shadow: 0 1px 10px 0 rgba( 0, 0, 0, 0.1 ), 0 1px 10px 0 rgba( 0, 0, 0, 0.1 );
+}
+
+#aiovg-thumbnail-generator img {
+    border-radius: 0;
+}
+
+#aiovg-thumbnail-generator input[type=radio] {
+    display: block;
+    margin: 7px auto;
+    pointer-events: none;
+}
+
+#aiovg-thumbnail-generator .aiovg-footer span {
+    vertical-align: top;
+}
+
+#aiovg-thumbnail-generator.aiovg-processing .aiovg-body,
+#aiovg-thumbnail-generator.aiovg-processing .aiovg-footer {
+    display: none;
+}
+
+#aiovg-html5-thumbnail-generator {
+    position: relative;
+    min-height: 100px;
+    cursor: pointer;
+}
+
+#aiovg-html5-thumbnail-generator .aiovg-item-inner {
+    position: absolute;
+    display: flex; 
+    top: 7px; 
+    right: 7px;
+    bottom: 7px;
+    left: 7px; 
+    margin: 0;
+    padding: 0;
+    border: none;
+    align-items: center;
+}
+
+#aiovg-html5-thumbnail-generator .aiovg-item-inner:hover {
+    box-shadow: none;
+}
+
+#aiovg-html5-thumbnail-generator button {
+    display: block;
+    width: 100%; 
+    height: 100%; 
+}
+
+#aiovg-html5-thumbnail-generator .aiovg-svg-icon-camera {
+    display: block;
+    margin: 0 auto 3px auto;
+	width: 24px;
+    text-align: center;
+    fill: currentColor;
+}
+
+#aiovg-thumbnail-generator-modal {
+	position: relative; 
+  	width: auto;
+	max-width: 640px; 
+	margin: 32px auto;
+	padding: 15px;  
+	background: #FFF;
+}
+
+#aiovg-thumbnail-generator-modal .aiovg-notice {
+    margin-top: 28px;
+    padding: 10px;
+}
+
+#aiovg-thumbnail-generator-canvas {
+    display: none;
+}
+
+#aiovg-thumbnail-generator-player {
+    margin: 15px 0; 
+    width: 100%;
+    height: auto;
+}
+
+@media only screen and (min-width: 481px) {
+    #aiovg-thumbnail-generator .aiovg-item { 
+        width: 25%; 
+    }
+}
+
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Login Form
+ *
+ *--------------------------------------------------------------------------------------------*/
+.aiovg-login-form #loginform {
+    max-width: 320px;
+}
+
+.aiovg-login-form .login-username label,
+.aiovg-login-form .login-password label {
+    display: block;
+}
+
+.aiovg-login-form  #user_login,
+.aiovg-login-form  #user_pass {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*----------------------------------------------------------------------------------------------
+ *
+ *	User Dashboard
+ *
+ *--------------------------------------------------------------------------------------------*/
+.aiovg-user-dashboard table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.aiovg-user-dashboard th,
+.aiovg-user-dashboard td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+.aiovg-user-dashboard .aiovg-col-image {
+    display: none;
+    width: 120px;
+}
+
+.aiovg-user-dashboard .aiovg-col-action {
+    width: 100px;
+}
+
+@media only screen and (min-width: 481px) {
+	.aiovg-user-dashboard .aiovg-col-image {
+        display: table-cell;
+    }
+}
+
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Video Form
+ *
+ *--------------------------------------------------------------------------------------------*/
+.aiovg-video-form .aiovg-form-user-notes {
+    margin-bottom: 20px;
+}
+
+.aiovg-video-form .aiovg-notes-max-upload-size {
+    font-size: smaller;
+}
+
+.aiovg-video-form .aiovg-row {
+	margin: 0;
+}
+
+.aiovg-video-form .aiovg-form-group {
+	margin-bottom: 15px;
+}
+
+.aiovg-video-form input[type=text],
+.aiovg-video-form select,
+.aiovg-video-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.aiovg-video-form .aiovg-checklist,
+.aiovg-video-form .aiovg-checklist li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none !important;
+}
+
+.aiovg-video-form #aiovg-field-categories .aiovg-checklist {
+    max-height: 100px;
+    margin: 0;
+	padding: 7px 10px;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+	overflow-y: scroll;
+}
+
+.aiovg-video-form .aiovg-checklist .children li {
+	padding: 0 18px;
+}
+
+.aiovg-video-form .aiovg-checklist.aiovg-horizontal li {
+    display: inline-block;
+    padding: 0 10px 0 0;
+}
+
+.aiovg-video-form .aiovg-button-upload,
+.aiovg-video-form .aiovg-upload-status {
+	margin: 10px 0 0 0;
+}
+
+.aiovg-video-form .aiovg-uploading .aiovg-button-upload,
+.aiovg-video-form .aiovg-upload-status {
+	display: none;
+}
+
+.aiovg-video-form .aiovg-uploading .aiovg-upload-status {
+    display: flex; 
+    height: 100%; 
+    align-items: center;
+}
+
+.aiovg-video-form .aiovg-upload-progress {
+	padding: 0 10px 0 0;
+}
+
+.aiovg-video-form #aiovg-field-tos .aiovg-col-1-25,
+.aiovg-video-form #aiovg-field-action-buttons .aiovg-col-1-25 {
+	font-size: 0;
+}
+
+.aiovg-video-form .aiovg-toggle-fields {
+    display: none;
+}
+
+.aiovg-video-form .aiovg-required-symbol,
+.aiovg-video-form .aiovg-field-error,
+.aiovg-video-form .aiovg-text-highlight {
+    color: #e80000;
+}
+
+.aiovg-video-form .aiovg-field-error span {
+    display: block;
+    margin: 7px 0;
+}
+
+.aiovg-video-form .aiovg-field-invalid input[type=text],
+.aiovg-video-form .aiovg-field-invalid select,
+.aiovg-video-form .aiovg-field-invalid textarea {
+    border: 1px solid #e80000;
+}
+
+.aiovg-video-form span.aiovg-field-date,
+.aiovg-video-form span.aiovg-field-magic {	
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    opacity: 0;
+    z-index: -1;
+}
+
+@media only screen and (min-width: 481px) {
+    .aiovg-video-form .aiovg-button-upload,
+    .aiovg-video-form .aiovg-upload-status {
+        margin: 0 0 0 10px;
+    }
+
+    .aiovg-video-form .aiovg-upload-progress {
+        padding: 0 10px;
+    }
+
+    .aiovg-video-form label .aiovg-text-muted {
+        display: block;
+    }
+}
+
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Notifications
+ *
+ *--------------------------------------------------------------------------------------------*/
+.aiovg-notice {
+    margin: 15px 0;
+    padding: 1px 12px;
+    background: #fff;
+    border-left: 4px solid #fff;
+    box-shadow: 0 0 1px 0 rgba( 0, 0, 0, 0.1 );    
+}
+
+.aiovg-notice p {
+	margin: 5px 0;
+	padding: 2px;
+}
+
+.aiovg-notice-success {
+	background-color: #dff0d8; 
+	border: 1px solid #d6e9c6; 
+	color: #3c763d;
+}
+
+.aiovg-notice-error {
+	background-color: #f2dede; 
+	border: 1px solid #ebccd1; 	
+	color: #a94442;
+}
+
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Ads
+ *
+ *--------------------------------------------------------------------------------------------*/
+.mejs__ima {
+    display: block;            
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.ima-linear-display .mejs__ima,
+.ima-non-linear-display .mejs__ima {
+	pointer-events: auto;
+}
+
+.ima-linear-display .mejs__overlay-play,
+.ima-linear-display .mejs__logo,
+.ima-linear-display .mejs__controls {
+	opacity: 0 !important;
+	pointer-events: none;
+}
+
+.ima-non-linear-display .mejs__ima {
+	margin-top: -50px;
+	-webkit-transition: margin-top .2s; /* Safari */
+    transition: margin-top .2s;
+}
+
+.ima-non-linear-display.ima-offscreen .mejs__ima {
+	margin-top: 0px;
+	-webkit-transition: margin-top .2s; /* Safari */
+    transition: margin-top .2s;
+}
+
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Popup
+ *
+ *--------------------------------------------------------------------------------------------*/
+.aiovg-videos-template-popup .aiovg-thumbnail {	
+    cursor: pointer;
+}
+
+.mfp-iframe-scaler iframe {
+    background: url( '../../../../public/assets/images/spinner-dark.gif' ) no-repeat scroll center center #000000 !important;
+}
+
+.aiovg-popup-content {
+    margin-top: 0;
+    padding: 20px 0;    
+}
+
+.aiovg-popup-content .mfp-title {    
+    margin-bottom: 10px;
+    padding-right: 0;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.aiovg-popup-content .mfp-title a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.aiovg-popup-content .mfp-title a:hover,
+.aiovg-popup-content .mfp-title a:focus {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.aiovg-popup-content .mfp-description {
+    color: #ddd;
+    line-height: 1.5;
+}
+
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Slider
+ *
+ *--------------------------------------------------------------------------------------------*/
+.aiovg .slick-loading .slick-list,
+.aiovg .aiovg-slick .aiovg-player-container {
+    background: #fff url( '../../../../public/assets/images/spinner.gif' ) center center no-repeat;
+}
+
+.aiovg-slick {
+    display: none;
+}
+
+.aiovg-slick.aiovg-slick-initialized {
+    display: block;
+}
+
+.aiovg-videos-template-slider .aiovg-thumbnail {	
+    border: none;
+    cursor: pointer;
+}
+
+.aiovg-videos-template-slider .aiovg-row {
+    margin: 0;
+}
+
+.aiovg-slider-layout-player .aiovg-caption {
+    padding: 0 10px;
+}
+
+.aiovg-slider-layout-both .aiovg-slider-player {
+	margin-bottom: 20px;
+}
+
+.aiovg .aiovg-slick-prev,
+.aiovg .aiovg-slick-next {
+    position: absolute;
+	display: block;
+	text-align: center;
+    opacity: .75;
+	cursor: pointer;
+    -webkit-transform: translate(0, -50%);
+        -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+	z-index: 9;   
+}
+
+.aiovg .aiovg-slick-prev:hover,
+.aiovg .aiovg-slick-next:hover {
+    opacity: 1;
+}
+
+.aiovg .aiovg-slick-prev.slick-disabled,
+.aiovg .aiovg-slick-next.slick-disabled {
+    opacity: .25;
+}
+
+.aiovg .aiovg-slick-prev {
+    left: 0;
+}
+
+[dir='rtl'] .aiovg .aiovg-slick-prev {
+    right: 0;
+    left: auto;
+}
+
+.aiovg .aiovg-slick-next {
+    right: 0;
+}
+
+[dir='rtl'] .aiovg .aiovg-slick-next {
+    right: auto;
+    left: 0;
+}
+
+.aiovg .slick-dotted.slick-slider {
+    margin-bottom: 30px;
+}
+
+.aiovg .aiovg-slick-dots {
+    position: absolute;
+	display: block;
+	width: 100%;
+    bottom: -25px; 
+	margin: 0;   
+    padding: 0;    
+    list-style: none;
+    text-align: center;
+}
+
+.aiovg .aiovg-slick-dots li {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.aiovg .aiovg-slick-dots li .aiovg-slick-dot {
+    display: block;
+	padding: 3px;
+	opacity: .25;    
+	line-height: 1;
+}
+
+.aiovg .aiovg-slick-dots li.slick-active .aiovg-slick-dot {
+    opacity: .75;
+}
+
+.aiovg .aiovg-slick-dots li .aiovg-slick-dot:hover {
+    opacity: 1;
+}

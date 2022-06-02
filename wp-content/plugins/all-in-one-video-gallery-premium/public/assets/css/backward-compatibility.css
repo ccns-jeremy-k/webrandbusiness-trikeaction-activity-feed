@@ -1,0 +1,210 @@
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Version <= 2.4.4
+ *
+ *--------------------------------------------------------------------------------------------*/
+@font-face {
+	font-family: 'aiovg-icons';
+	src: url('../fonts/aiovg-icons.eot?j6tmf3');
+	src: url('../fonts/aiovg-icons.eot?j6tmf3#iefix') format('embedded-opentype'),
+		url('../fonts/aiovg-icons.ttf?j6tmf3') format('truetype'),
+		url('../fonts/aiovg-icons.woff?j6tmf3') format('woff'),
+	  	url('../fonts/aiovg-icons.svg?j6tmf3#aiovg-icons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+  
+[class^="aiovg-icon-"],
+[class*=" aiovg-icon-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'aiovg-icons' !important;
+	speak: none;
+	color: #666;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+  
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+  
+.aiovg-icon-videos:before,
+.aiovg-icon-film:before {
+	content: "\e913";
+}
+
+.aiovg-icon-categories:before,
+.aiovg-icon-folder-open:before {
+	content: "\e930";
+}
+
+.aiovg-icon-views:before,
+.aiovg-icon-eye:before {
+	content: "\e9ce";
+}
+
+.aiovg-icon-tags:before {
+	content: "\e936";
+}
+
+.aiovg .aiovg-play-icon {
+	position: absolute;
+	background-image: url( '../../../public/assets/images/play.png' );
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	z-index: 3;	
+}
+
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Version <= 2.4.3
+ *
+ *--------------------------------------------------------------------------------------------*/
+.aiovg .aiovg-play {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	margin: -15px 0px 0px -15px !important;
+	padding: 0px;
+	top: 50%;
+	left: 50%;
+	pointer-events: none;
+	z-index: 3;	
+}
+
+/*----------------------------------------------------------------------------------------------
+ *
+ *	Version <= 1.5.6
+ *
+ *--------------------------------------------------------------------------------------------*/
+.aiovg .fa {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'aiovg-icons' !important;
+	speak: none;
+	color: #666;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+  
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.aiovg .fa-file-video-o:before {
+	content: "\e913";
+}
+
+.aiovg .fa-folder-open-o:before {
+	content: "\e930";
+}
+
+.aiovg .fa-eye:before {
+	content: "\e9ce";
+}
+
+.aiovg .row {
+    display: -webkit-flex; /* Safari */
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.aiovg .row .row,
+.aiovg .aiovg-slick-videos .row {
+    margin: 0;
+}
+
+.aiovg .col-md-1,
+.aiovg .col-md-2,
+.aiovg .col-md-3,
+.aiovg .col-md-4,
+.aiovg .col-md-6,
+.aiovg .col-md-12 {
+    width: 100%;
+}
+
+.aiovg .thumbnail {
+	margin: 15px;
+}
+
+.aiovg.aiovg-slider .thumbnail {
+	margin: 0;
+}
+
+.aiovg .thumbnail img {
+	box-shadow: none;
+}
+
+.aiovg .caption {
+	margin: 0;
+    padding: 7px 0;
+}
+
+.aiovg .caption .aiovg-title {
+	margin: 0 !important;
+}
+
+.aiovg .caption .aiovg-title a {
+	text-decoration: none;
+}
+
+.aiovg .caption .aiovg-title small {
+	font-weight: normal;
+}
+
+.aiovg .caption .aiovg-category small,
+.aiovg .caption .aiovg-views small {
+	font-size: inherit;
+}
+
+.aiovg-slick .fa {
+	color: inherit;
+	font-style: normal;
+}
+
+.aiovg-slick-prev .fa:before {
+	content: "❮";
+}
+
+.aiovg-slick-next .fa:before {
+	content: "❯";
+}
+
+@media only screen and (min-width: 481px) {
+	.aiovg .col-md-1 { 
+        width: 8.33%; 
+	}
+
+	.aiovg .col-md-2 { 
+        width: 16.66%; 
+	}
+	
+	.aiovg .col-md-3 { 
+        width: 25%; 
+	}
+	
+	.aiovg .col-md-4 { 
+        width: 33.33%; 
+    } 
+
+    .aiovg .col-md-6 { 
+        width: 50%; 
+	}
+	
+	.aiovg .col-md-8 { 
+        width: 66.66%; 
+    }
+}

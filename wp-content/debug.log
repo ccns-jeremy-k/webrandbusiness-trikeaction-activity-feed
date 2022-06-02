@@ -1,0 +1,44 @@
+[23-May-2022 21:26:39 UTC] PHP Notice:  Undefined index: HTTP_HOST in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 359
+[23-May-2022 21:26:39 UTC] PHP Notice:  Undefined index: SERVER_ADDR in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 360
+[01-Jun-2022 18:34:15 UTC] PHP Notice:  Undefined index: HTTP_HOST in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 359
+[01-Jun-2022 18:34:15 UTC] PHP Notice:  Undefined index: SERVER_ADDR in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 360
+[01-Jun-2022 18:37:32 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /var/www/html/wp-includes/l10n.php on line 748
+[01-Jun-2022 18:37:52 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /var/www/html/wp-includes/Requests/IRI.php on line 1087
+[01-Jun-2022 18:38:20 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /var/www/html/wp-content/themes/buddyboss-theme/inc/admin/framework/redux-core/inc/classes/class-redux-functions.php on line 64
+[01-Jun-2022 18:39:18 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1355
+[01-Jun-2022 18:39:18 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1358
+[01-Jun-2022 18:46:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-admin/admin-ajax.php on line 27
+[01-Jun-2022 18:46:01 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-admin/admin-ajax.php on line 28
+[01-Jun-2022 18:46:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/functions.php on line 6714
+[01-Jun-2022 18:46:05 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/functions.php on line 6828
+[01-Jun-2022 18:46:17 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-admin/includes/misc.php on line 1310
+[01-Jun-2022 18:46:22 UTC] PHP Notice:  Trying to get property 'children' of non-object in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 95
+[01-Jun-2022 18:46:22 UTC] PHP Warning:  array_reverse() expects parameter 1 to be array, bool given in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 99
+[01-Jun-2022 18:46:22 UTC] PHP Notice:  Trying to get property 'children' of non-object in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 95
+[01-Jun-2022 18:46:22 UTC] PHP Warning:  array_reverse() expects parameter 1 to be array, bool given in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 99
+[01-Jun-2022 18:46:22 UTC] PHP Notice:  Trying to get property 'children' of non-object in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 95
+[01-Jun-2022 18:46:22 UTC] PHP Warning:  array_reverse() expects parameter 1 to be array, bool given in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 99
+[01-Jun-2022 18:46:22 UTC] PHP Notice:  Trying to get property 'children' of non-object in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 95
+[01-Jun-2022 18:46:22 UTC] PHP Warning:  array_reverse() expects parameter 1 to be array, bool given in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 99
+[01-Jun-2022 18:46:24 UTC] PHP Warning:  Use of undefined constant wp_oembed_get - assumed 'wp_oembed_get' (this will throw an Error in a future version of PHP) in /var/www/html/wp-content/plugins/oembed-for-buddypress/bp-oembed.php on line 33
+[01-Jun-2022 18:48:38 UTC] PHP Notice:  Undefined index: HTTP_HOST in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 359
+[01-Jun-2022 18:48:38 UTC] PHP Notice:  Undefined index: SERVER_ADDR in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 360
+[01-Jun-2022 18:49:36 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-admin/admin-ajax.php on line 27
+[01-Jun-2022 18:49:36 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-admin/admin-ajax.php on line 28
+[01-Jun-2022 18:49:36 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/functions.php on line 6714
+[01-Jun-2022 18:49:37 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/functions.php on line 6828
+[01-Jun-2022 18:49:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1355
+[01-Jun-2022 18:49:39 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1358
+[01-Jun-2022 18:49:40 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-admin/includes/misc.php on line 1310
+[01-Jun-2022 18:49:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1355
+[01-Jun-2022 18:49:42 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1358
+[01-Jun-2022 18:50:22 UTC] PHP Warning:  include(/var/www/html/wp-content/themes/buddyboss-theme-child/ta_actions/ta_actions.php): failed to open stream: No such file or directory in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 104
+[01-Jun-2022 18:50:22 UTC] PHP Warning:  include(): Failed opening '/var/www/html/wp-content/themes/buddyboss-theme-child/ta_actions/ta_actions.php' for inclusion (include_path='.:/usr/local/lib/php') in /var/www/html/wp-content/themes/buddyboss-theme-child/functions.php on line 104
+[01-Jun-2022 18:51:06 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1355
+[01-Jun-2022 18:51:06 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1358
+[01-Jun-2022 18:55:06 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1355
+[01-Jun-2022 18:55:06 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /var/www/html/wp-config.php:229) in /var/www/html/wp-includes/pluggable.php on line 1358
+[01-Jun-2022 20:52:33 UTC] PHP Notice:  Undefined index: HTTP_HOST in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 359
+[01-Jun-2022 20:52:33 UTC] PHP Notice:  Undefined index: SERVER_ADDR in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 360
+[01-Jun-2022 20:54:35 UTC] PHP Notice:  Undefined index: HTTP_HOST in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 359
+[01-Jun-2022 20:54:35 UTC] PHP Notice:  Undefined index: SERVER_ADDR in /var/www/html/wp-content/plugins/directorist/includes/modules/appsero/src/Insights.php on line 360
