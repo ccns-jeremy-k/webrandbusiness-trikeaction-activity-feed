@@ -123,8 +123,8 @@ class feed
         ?>
         <div class="activity-header">
             <p>
-                <a href="http://localhost:8000/members/<?= $activity->user_nicename ?>/"><?= $activity->user_nicename ?></a>
-                posted a new video. <a
+                <?=$activity->action?>
+                 <a
                         href="http://localhost:8000/?p=<?= $activity->secondary_item_id ?>"
                         class="view activity-time-since"><span
                     <a
@@ -184,8 +184,9 @@ class feed
             <ul class="activity-list item-list bp-list">
                 <?php
                 foreach ($this->dataset as $activity) {
+//                    var_dump(json_encode($activity, JSON_PRETTY_PRINT));
                     ?>
-                    <li class="activity comment_comment activity-item wp-link-embed"
+                    <li class="activity <?=$activity->type?> activity-item wp-link-embed"
                         id="activity-<?= $activity->id ?>" data-bp-activity-id="<?= $activity->id ?>"
                         data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $activity->date_recorded)->getTimestamp()) ?>"
                         data-bp-activity="<?= htmlspecialchars(json_encode($activity)) ?>">
