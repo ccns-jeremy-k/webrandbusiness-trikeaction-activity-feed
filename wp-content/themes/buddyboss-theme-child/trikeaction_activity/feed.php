@@ -433,17 +433,11 @@ class feed
                                                    href="<?=$activity->primary_link?>"><span
                                     class="bp-screen-reader-text">Join Discussion</span> <span class="comment-count">Join Discussion</span></a>
                     </div>
-                    <div class="generic-button"><a class="bb-icon-l button bb-icon-comment bp-secondary-action"
-                                                   data-btn-id="bbp-reply-form"
-                                                   data-topic-title="Where do we go from here?" data-topic-id="<?=$activity->secondary_item_id?>"
-                                                   aria-expanded="false" href="#new-post"
-                                                   data-author-name="<?=$user->display_name?>"><span class="bp-screen-reader-text">Quick Reply</span>
-                            <span class="comment-count">Quick Reply</span></a></div>
                 </div>
             </div>
         </div>
         <div class="bp-generic-meta activity-meta action">
-            <div class="generic-button"><a href="http://localhost:8000/news-feed/favorite/<?=$activity->id?>/?_wpnonce=9a8b278147"
+            <div class="generic-button"><a href="http://localhost:8000/news-feed/favorite/<?=$activity->id?>"
                                            class="button fav bp-secondary-action" aria-pressed="false"><span
                             class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
         </div>
