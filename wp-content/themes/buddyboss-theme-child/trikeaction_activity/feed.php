@@ -5,14 +5,6 @@ class feed
     private bool $hide_comments = false;
     private array $dataset;
 
-    private array $types = [
-        'bbp_reply_create' => 'New Reply',
-        'bbp_topic_create' => 'New Discussion',
-        'new_blog_aiovg_videos' => 'New Video',
-        'activity_comment' => 'New Comment',
-        'activity_update' => 'New Comment Reply',
-    ];
-
     /**
      * Get activity items, as specified by parameters.
      *
@@ -60,9 +52,9 @@ class feed
     public function __construct($attrs)
     {
         if (! is_admin() && (! defined('DOING_AJAX') || ! DOING_AJAX)) {
-            if ($attrs['hide_comments']) {
-                $this->hide_comments = (bool)$attrs['hide_comments'];
-                unset($attrs['hide_comments']);
+            if ($attrs['hide_child_comments']) {
+                $this->hide_comments = (bool)$attrs['hide_child_comments'];
+                unset($attrs['hide_child_comments']);
             }
             $this->dataset = BP_Activity_Activity::get($attrs)['activities'];
             $this->create_activity_timeline();
@@ -141,42 +133,6 @@ class feed
         <?php
     }
 
-    public function get_activity_state($activity)
-    {
-        $activity_id = $activity->id;
-        $like_text = bp_activity_get_favorite_users_string($activity_id);
-        $comment_count = bp_activity_get_comments();
-        $favorited_users = bp_activity_get_favorite_users_tooltip_string($activity_id);
-
-        ?>
-        <div class="activity-state <?php echo $like_text ? 'has-likes' : ''; ?> <?php echo $comment_count ? 'has-comments' : ''; ?>">
-            <a href="javascript:void(0);" class="activity-state-likes">
-			<span class="like-text hint--bottom hint--medium hint--multiline"
-                  data-hint="<?php echo ($favorited_users) ? $favorited_users : ''; ?>">
-				<?php echo $like_text ?: ''; ?>
-			</span>
-            </a>
-            <span class="ac-state-separator">&middot;</span>
-            <?php if (bp_activity_can_comment()) :
-                $activity_state_comment_class['activity_state_comment_class'] = 'activity-state-comments';
-                $activity_state_class = apply_filters('bp_nouveau_get_activity_comment_buttons_activity_state', $activity_state_comment_class, $activity_id);
-                ?>
-                <a href="#" class="<?php echo esc_attr(trim(implode(' ', $activity_state_class))); ?>">
-				<span class="comments-count">
-					<?php
-                    if ($comment_count > 1) {
-                        echo $comment_count . ' ' . __('Comments', 'buddyboss');
-                    } else {
-                        echo $comment_count . ' ' . __('Comment', 'buddyboss');
-                    }
-                    ?>
-				</span>
-                </a>
-            <?php endif; ?>
-        </div>
-        <?php
-    }
-
     public function create_activity_timeline(): void
     {
         ?>
@@ -189,6 +145,10 @@ class feed
                         id="activity-<?= $activity->id ?>" data-bp-activity-id="<?= $activity->id ?>"
                         data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $activity->date_recorded)->getTimestamp()) ?>"
                         data-bp-activity="<?= htmlspecialchars(json_encode($activity)) ?>">
+                        <div class="bp-activity-head">
+                            <?=$this->get_profile_avatar($activity)?>
+                            <?=$this->get_activity_header($activity)?>
+                        </div>
                         <?php
                         if ($activity->type === 'mpp_media_upload') {
                             $this->activity_update($activity);
@@ -210,31 +170,21 @@ class feed
         <?php
     }
 
+    private function activity_comment($activity)
+    {
+        ?>
+            <div class="activity-content ">
+                <div class="activity-inner ">
+                    <?=$activity->content?>
+                </div>
+            </div>
+        <?php
+
+    }
+
     private function comment_comment($activity)
     {
         ?>
-        <div class="bp-activity-head">
-            <?php $this->get_profile_avatar($activity); ?>
-
-            <div class="activity-header">
-                <p><?= $activity->action ?>` <a
-                            href="http://localhost:8000/news-feed/p/<?= $activity->id ?>/"
-                            class="view activity-time-since"><span
-                                class="time-since"
-                                data-livestamp="<?= $activity->date_recorded ?>+0000"><?= bp_core_time_since($activity->date_recorded) ?></span></a>
-                </p>
-                <p class="activity-date">
-                    <a
-                            href="http://localhost:8000/news-feed/p/<?= $activity->id ?>/"
-                            class="view activity-time-since"><span
-                                class="time-since"
-                                data-livestamp="<?= $activity->date_recorded ?>+0000"><?= bp_core_time_since($activity->date_recorded) ?></span></a>
-                </p>
-
-            </div>
-        </div>
-
-
         <div class="activity-content ">
             <?= $activity->content ?>
         </div>
@@ -312,12 +262,6 @@ class feed
     {
         $media = bp_media_get_activity_media($activity->id);
         ?>
-        <div class="bp-activity-head">
-            <?php
-            $this->get_profile_avatar($activity);
-            $this->get_activity_header($activity);
-            ?>
-        </div>
 
         <div class="activity-content  media-activity-wrap">
             <div class="activity-inner bb-empty-content">
@@ -332,14 +276,6 @@ class feed
     {
         $image = get_post_meta($activity->secondary_item_id, 'image');
         ?>
-        <div class="bp-activity-head">
-            <?php
-            $this->get_profile_avatar($activity);
-            $this->get_activity_header($activity);
-            ?>
-        </div>
-
-
         <div class="activity-content">
             <div class="activity-inner">
                 <div class="bb-content-wrp">
@@ -359,13 +295,6 @@ class feed
     private function bbp_reply_create($activity)
     {
         ?>
-        <div class="bp-activity-head">
-            <?php
-            $this->get_profile_avatar($activity);
-            $this->get_activity_header($activity);
-            ?>
-        </div>
-
         <div class="activity-content ">
             <div class="activity-inner ">
                 <p class="activity-discussion-title-wrap"><?= $activity->action ?></p>
@@ -411,14 +340,6 @@ class feed
                     </p>"
 
         ?>
-
-        <div class="bp-activity-head">
-            <?php
-            $this->get_profile_avatar($activity);
-            $this->get_activity_header($activity);
-            ?>
-        </div>
-
         <div class="activity-content ">
             <div class="activity-inner ">
                 <p class="activity-discussion-title-wrap"><a

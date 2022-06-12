@@ -22,8 +22,13 @@ function taa_get_activities($attrs): string
 function taa_init($attrs): string
 {
     add_action('comment_post', 'create_new_activity', 10, 3);
+    add_filter( 'bp_blogs_record_comment_post_types', 'push_comments_to_activity' );
     taa_add_activities_styles_and_scripts();
     return taa_get_activities($attrs);
+}
+
+function push_comments_to_activity() {
+    return array( 'page', 'post' );
 }
 
 function create_new_activity($comment_id, $approved, $commend_data): void
