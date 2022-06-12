@@ -436,11 +436,6 @@ class feed
                 </div>
             </div>
         </div>
-        <div class="bp-generic-meta activity-meta action">
-            <div class="generic-button"><a href="http://localhost:8000/news-feed/favorite/<?=$activity->id?>"
-                                           class="button fav bp-secondary-action" aria-pressed="false"><span
-                            class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
-        </div>
         <?php
     }
 
