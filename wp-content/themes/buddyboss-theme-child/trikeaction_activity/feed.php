@@ -190,7 +190,9 @@ class feed
                         data-bp-activity="<?= htmlspecialchars(json_encode($activity)) ?>">
                         <?php
                         call_user_func(array($this, $activity->type), $activity);
+                        $comments = $this->_get_activity_comments($activity);
                         ?>
+
                     </li>
                     <?php
 
@@ -243,6 +245,50 @@ class feed
             </div>
         </div>
         <?php
+    }
+
+    private function _get_media_attachment_id($media_id):int
+    {
+        global $wpdb;
+        return (int) $wpdb->get_results("SELECT attachment_id FROM {$wpdb->prefix}bp_media WHERE id = {$media_id}")[0]->attachment_id;
+    }
+
+    private function _get_activity_comments($activity) {
+        global $wpdb;
+        $comments = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}bp_activity WHERE item_id = {$activity->id} AND type = 'activity_comment'");
+        if (count($comments) > 0) {
+            ?>
+            <div class="activity-state  has-comments">
+                <a href="<?=$activity->primary_link?>" class="activity-state-comments" style="border: none;">
+				<span class="comments-count">
+					<?=count($comments)?> Comments </span>
+                </a>
+            </div>
+            <div class="activity-comments">
+                <ul>
+                    <?php
+                    foreach ($comments as $comment):
+                    ?>
+                    <li id="acomment-<?=$comment->id?>" class=" comment-item" data-bp-activity-comment-id="<?=$comment->id?>">
+                        <?php
+                            $user = get_user_by('id', $comment->user_id);
+                            $this->get_profile_avatar($comment);
+                        ?>
+
+                        <div class="acomment-meta">
+                            <a class="author-name" href="<?=$comment->primary_link?>"><?=$user->user_nicename?></a> <a href="http://localhost:8000/news-feed/p/102/#acomment-<?=$comment->id?>" class="activity-time-since"><time class="time-since" datetime="<?=$comment->date_recorded?>" data-bp-timestamp="<?=(DateTime::createFromFormat('Y-m-d H:i:s', $comment->date_recorded)->getTimestamp())?>"><?= bp_core_time_since($activity->date_recorded) ?></time></a>
+                        </div>
+
+                        <div class="acomment-content">
+                            <?=$comment->content?>
+                        </div>
+
+                    </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <?php
+        }
 
     }
 
@@ -250,7 +296,6 @@ class feed
     {
         $media = bp_media_get_activity_media($activity->id);
         ?>
-
         <div class="bp-activity-head">
             <?php
             $this->get_profile_avatar($activity);
@@ -283,9 +328,14 @@ class feed
             <div class="activity-inner">
                 <div class="bb-content-wrp">
                     <?= $activity->action ?>
+                    </a>
                 </div>
             </div>
+            <a
+                    aria-expanded="false"
+                    href="<?=$activity->primary_link?>">
             <img src="<?= $image[0] ?>">
+            </a>
         </div>
         <?php
 
@@ -303,14 +353,14 @@ class feed
 
         <div class="activity-content ">
             <div class="activity-inner ">
-                <p class="activity-discussion-title-wrap"><?=?></p>
+                <p class="activity-discussion-title-wrap"><?=$activity->action?></p>
                 <div class="bb-content-inr-wrap">
-                    <blockquote><p>Great topic thanks for sharing! 😀 </p></blockquote>
+                    <?=$activity->content?>
                 </div>
                 <div class="activity-inner-meta action">
                     <div class="generic-button"><a class="button bb-icon-l bb-icon-comments-square bp-secondary-action"
                                                    aria-expanded="false"
-                                                   href="http://localhost:8000/forums/discussion/so-many-things-to-discuss-where-to-start/#post-1776"><span
+                                                   href="<?=$activity->primary_link?>"><span
                                     class="bp-screen-reader-text">Join Discussion</span> <span class="comment-count">Join Discussion</span></a>
                     </div>
                 </div>
@@ -325,7 +375,7 @@ class feed
             </div>
         </div>
         <div class="bp-generic-meta activity-meta action">
-            <div class="generic-button"><a href="http://localhost:8000/news-feed/favorite/120/?_wpnonce=9a8b278147"
+            <div class="generic-button"><a href="http://localhost:8000/news-feed/favorite/<?=$activity->id?>/?_wpnonce=9a8b278147"
                                            class="button fav bp-secondary-action" aria-pressed="false"><span
                             class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
         </div>
@@ -442,44 +492,6 @@ class feed
 
         if (! $full) $string = array_slice($string, 0, 1);
         return $string ? implode(', ', $string) . ' ago' : 'just now';
-    }
-
-    public function build_tree(array &$dataset, $node_key, $parent_node_key, $child_node_key = 'children', $parent_id = 0): object
-    {
-        $branch = array();
-        foreach ($dataset as &$data) {
-            switch ($data['type']) {
-                case 'new_blog_aiovg_videos':
-                    $data['image'] = get_post_meta($data->secondary_item_id, 'image');
-                    $data['comments'] = $this->get_comments($data->secondary_item_id);
-                    break;
-                default:
-                    break;
-            }
-            if ($parent_id < 1) {
-                if ((string)$data->{$parent_node_key} === (string)$parent_id) {
-                    $children = $this->build_tree($dataset, $node_key, $parent_node_key, $child_node_key, $parent_id + 2);
-                    if (! empty($children)) {
-                        foreach ($children as $child) {
-                            $data->$child_node_key[] = (object)$child;
-                            if (isset($data->{$child->{$node_key}})) {
-                                unset($data->{$child->{$node_key}});
-                            }
-                        }
-                    }
-                }
-            }
-            $branch[$data->{$node_key}] = $data;
-
-
-        }
-        return (object)$branch;
-    }
-
-
-    public function get_parent($parent_id)
-    {
-        return get_post($parent_id);
     }
 
     public function dd($array)
