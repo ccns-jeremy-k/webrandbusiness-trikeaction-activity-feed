@@ -30,7 +30,7 @@
 		</div>
 	<?php endif; ?>
 
-	<form id="aiovg-form-video" action="<?php echo aiovg_premium_get_video_form_page_url(); ?>" method="post">	
+	<form id="aiovg-form-video" action="<?php echo aiovg_premium_get_video_form_page_url(); ?>" method="post">
 		<div class="aiovg-form-user-notes">
 			<div class="aiovg-notes-required-fields"><?php printf( esc_html__( 'Fields marked with an %s are required', 'all-in-one-video-gallery' ), '<span class="aiovg-required-symbol">*</span>' ); ?></div>
 			<?php if ( ! empty( $attributes['allow_file_uploads'] ) ) : ?>
@@ -49,7 +49,7 @@
 			<div class="aiovg-col aiovg-col-p-75">
 				<input type="text" name="title" id="aiovg-title" class="aiovg-form-control aiovg-field-validate" placeholder="<?php esc_attr_e( 'Enter your video title here', 'all-in-one-video-gallery' ); ?>" value="<?php echo esc_attr( $attributes['title'] ); ?>" />
 				<div class="aiovg-field-error"></div>
-			</div>			
+			</div>
 		</div>
 
 		<?php if ( ! empty( $attributes['assign_categories'] ) ) : ?>
@@ -68,7 +68,7 @@
 							'selected_cats' => array_map( 'intval', $attributes['catids'] ),
 							'exclude'       => array(),
 							'echo'          => 0
-						); 
+						);
 
 						$categories_excluded = get_terms( array(
 							'taxonomy'   => 'aiovg_categories',
@@ -77,7 +77,7 @@
 							'meta_key'   => 'exclude_video_form',
 							'meta_value' => 1
 						) );
-		
+
 						if ( ! empty( $categories_excluded ) && ! is_wp_error( $categories_excluded ) ) {
 							$categories_args['exclude']	= array_map( 'intval', $categories_excluded );
 
@@ -87,23 +87,23 @@
 								}
 							}
 						}
-					
+
 						$categories_args = apply_filters( 'aiovg_video_form_categories_args', $categories_args );
 						$categories = wp_terms_checklist( 0, $categories_args );
 
 						if ( ! empty( $categories_args['exclude'] ) ) {
 							foreach ( $categories_args['exclude'] as $id ) {
-								$categories = str_replace( 
-									"li id='aiovg_categories-" . $id . "'",					
+								$categories = str_replace(
+									"li id='aiovg_categories-" . $id . "'",
 									"li id='aiovg_categories-" . $id . "' style='display: none;'",
-									$categories 
+									$categories
 								);
 							}
 						}
 
 						echo $categories;
 						?>
-					</ul>  
+					</ul>
 				</div>
 			</div>
 		<?php endif; ?>
@@ -119,7 +119,7 @@
 				</div>
 				<div class="aiovg-col aiovg-col-p-75">
 					<select name="type" id="aiovg-video-type" class="aiovg-form-control">
-						<?php 
+						<?php
 						foreach ( $attributes['allowed_source_types'] as $key => $label ) {
 							printf( '<option value="%s"%s>%s</option>', $key, selected( $key, $attributes['type'], false ), $label );
 						}
@@ -137,7 +137,7 @@
 						<?php esc_html_e( 'Video', 'all-in-one-video-gallery' ); ?>
 						<span class="aiovg-required-symbol">*</span>
 						<span class="aiovg-text-muted">(mp4, webm, ogv, m4v, mov)</span>
-					</label>										
+					</label>
 				</div>
 				<div class="aiovg-col aiovg-col-p-75">
 					<?php if ( ! empty( $attributes['allow_file_uploads'] ) ) : ?>
@@ -146,7 +146,7 @@
 								<input type="text" name="mp4" id="aiovg-mp4" class="aiovg-form-control aiovg-field-validate" placeholder="<?php esc_attr_e( 'Enter your direct file URL (OR) upload your file using the button here', 'all-in-one-video-gallery' ); ?> &rarr;" value="<?php echo esc_attr( $attributes['mp4'] ); ?>" />
 							</div>
 							<div class="aiovg-col aiovg-col-p-25">
-								<button type="button" id="aiovg-button-upload-mp4" class="aiovg-button aiovg-button-upload" data-format="mp4"><?php esc_html_e( 'Upload File', 'all-in-one-video-gallery' ); ?></button> 
+								<button type="button" id="aiovg-button-upload-mp4" class="aiovg-button aiovg-button-upload" data-format="mp4"><?php esc_html_e( 'Upload File', 'all-in-one-video-gallery' ); ?></button>
 								<div class="aiovg-upload-status">
 									<div class="aiovg-upload-progress"></div>
 									<div class="aiovg-upload-cancel"><a href="javascript: void(0);"><?php esc_html_e( 'cancel', 'all-in-one-video-gallery' ); ?></a></div>
@@ -175,7 +175,7 @@
 									<input type="text" name="webm" id="aiovg-webm" class="aiovg-form-control aiovg-field-validate" placeholder="<?php esc_attr_e( 'Enter your direct file URL (OR) upload your file using the button here', 'all-in-one-video-gallery' ); ?> &rarr;" value="<?php echo esc_attr( $attributes['webm'] ); ?>" /></div>
 								</div>
 								<div class="aiovg-col aiovg-col-p-25">
-									<button type="button" id="aiovg-button-upload-webm" class="aiovg-button aiovg-button-upload" data-format="webm"><?php esc_html_e( 'Upload File', 'all-in-one-video-gallery' ); ?></button> 
+									<button type="button" id="aiovg-button-upload-webm" class="aiovg-button aiovg-button-upload" data-format="webm"><?php esc_html_e( 'Upload File', 'all-in-one-video-gallery' ); ?></button>
 									<div class="aiovg-upload-status">
 										<div class="aiovg-upload-progress"></div>
 										<div class="aiovg-upload-cancel"><a href="javascript: void(0);"><?php esc_html_e( 'cancel', 'all-in-one-video-gallery' ); ?></a></div>
@@ -205,7 +205,7 @@
 									<input type="text" name="ogv" id="aiovg-ogv" class="aiovg-form-control" placeholder="<?php esc_attr_e( 'Enter your direct file URL (OR) upload your file using the button here', 'all-in-one-video-gallery' ); ?> &rarr;" value="<?php echo esc_attr( $attributes['ogv'] ); ?>" />
 								</div>
 								<div class="aiovg-col aiovg-col-p-25">
-									<button type="button" id="aiovg-button-upload-ogv" class="aiovg-button aiovg-button-upload" data-format="ogv"><?php esc_html_e( 'Upload File', 'all-in-one-video-gallery' ); ?></button> 
+									<button type="button" id="aiovg-button-upload-ogv" class="aiovg-button aiovg-button-upload" data-format="ogv"><?php esc_html_e( 'Upload File', 'all-in-one-video-gallery' ); ?></button>
 									<div class="aiovg-upload-status">
 										<div class="aiovg-upload-progress"></div>
 										<div class="aiovg-upload-cancel"><a href="javascript: void(0);"><?php esc_html_e( 'cancel', 'all-in-one-video-gallery' ); ?></a></div>
@@ -314,7 +314,7 @@
 							<input type="text" name="image" id="aiovg-image" class="aiovg-form-control aiovg-field-validate" placeholder="<?php esc_attr_e( 'Enter your direct file URL (OR) upload your file using the button here', 'all-in-one-video-gallery' ); ?> &rarr;" value="<?php echo esc_attr( $attributes['image'] ); ?>" />
 						</div>
 						<div class="aiovg-col aiovg-col-p-25">
-							<button type="button" id="aiovg-button-upload-image" class="aiovg-button aiovg-button-upload" data-format="image"><?php esc_html_e( 'Upload File', 'all-in-one-video-gallery' ); ?></button> 
+							<button type="button" id="aiovg-button-upload-image" class="aiovg-button aiovg-button-upload" data-format="image"><?php esc_html_e( 'Upload File', 'all-in-one-video-gallery' ); ?></button>
 							<div class="aiovg-upload-status">
 								<div class="aiovg-upload-progress"></div>
 								<div class="aiovg-upload-cancel"><a href="javascript: void(0);"><?php esc_html_e( 'cancel', 'all-in-one-video-gallery' ); ?></a></div>
@@ -338,7 +338,7 @@
 				<label class="aiovg-form-label"><?php esc_html_e( 'Video Description', 'all-in-one-video-gallery' ); ?></label>
 			</div>
 			<div class="aiovg-col aiovg-col-p-75">
-				<textarea name="description" id="aiovg-description" class="aiovg-form-control" rows="6" placeholder="<?php esc_attr_e( 'Enter your video description here', 'all-in-one-video-gallery' ); ?>"><?php echo wp_kses_post( $attributes['description'] ); ?></textarea> 
+				<textarea name="description" id="aiovg-description" class="aiovg-form-control" rows="6" placeholder="<?php esc_attr_e( 'Enter your video description here', 'all-in-one-video-gallery' ); ?>"><?php echo wp_kses_post( $attributes['description'] ); ?></textarea>
 			</div>
 		</div>
 
@@ -351,20 +351,20 @@
 				<div class="aiovg-col aiovg-col-p-75">
 					<div class="aiovg-autocomplete" data-uid="<?php echo esc_attr( $uid ); ?>">
 						<input type="text" id="aiovg-autocomplete-input-<?php echo esc_attr( $uid ); ?>" class="aiovg-form-control aiovg-autocomplete-input" placeholder="<?php esc_attr_e( 'Start typing for suggestions', 'all-in-one-video-gallery' ); ?>" autocomplete="off" />
-						
+
 						<?php
 						$tags_args = array(
 							'taxonomy'   => 'aiovg_tags',
-							'orderby'    => 'name', 
+							'orderby'    => 'name',
 							'order'      => 'asc',
 							'hide_empty' => false
 						);
-		
+
 						$terms = get_terms( $tags_args );
-		
+
 						// Source
 						echo '<select id="aiovg-autocomplete-select-' . esc_attr( $uid ) . '" class="aiovg-autocomplete-select" style="display: none;">';
-		
+
 						if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
 							foreach ( $terms as $term ) {
 								printf(
@@ -374,16 +374,16 @@
 								);
 							}
 						}
-		
+
 						echo '</select>';
 						?>
 					</div>
 
 					<div id="aiovg-autocomplete-tags-<?php echo esc_attr( $uid ); ?>" class="aiovg-autocomplete-tags">
-						<?php 
+						<?php
 						if ( ! empty( $attributes['tagids'] ) ) {
 							$selected_tags = array_map( 'intval', $attributes['tagids'] );
-			
+
 							if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
 								foreach ( $terms as $term ) {
 									if ( in_array( $term->term_id, $selected_tags ) ) {
@@ -392,14 +392,14 @@
 										$html .= '<span class="aiovg-tag-item-close">&times;</span>';
 										$html .= '<input type="hidden" name="ta[]" value="' . $term->term_id . '" />';
 										$html .= '</span>';
-			
+
 										echo $html;
 									}
 								}
 							}
 						}
 						?>
-					</div>					
+					</div>
 				</div>
 			</div>
 		<?php endif; ?>
@@ -407,7 +407,7 @@
 		<!-- Hook for developers to add new fields -->
         <?php do_action( 'aiovg_video_form_fields', $attributes ); ?>
 
-		<?php if ( ! empty( $attributes['terms_and_conditions'] ) ) : 
+		<?php if ( ! empty( $attributes['terms_and_conditions'] ) ) :
 			$terms_and_conditions = apply_filters( 'aiovg_terms_and_conditions_page_url', $attributes['terms_and_conditions'] );
 			?>
 			<!-- Terms and Conditions -->
@@ -429,22 +429,22 @@
 			<div class="aiovg-col aiovg-col-p-25">&nbsp;</div>
 			<div class="aiovg-col aiovg-col-p-75">
 				<?php wp_nonce_field( 'aiovg_save_video', 'aiovg_video_nonce' ); ?>
-				<input type="hidden" name="post_type" value="aiovg_videos" /> 
-				<input type="hidden" name="post_id" value="<?php echo esc_attr( $attributes['post_id'] ); ?>" />   
+				<input type="hidden" name="post_type" value="aiovg_videos" />
+				<input type="hidden" name="post_id" value="<?php echo esc_attr( $attributes['post_id'] ); ?>" />
 				<?php if ( $attributes['is_new'] ) : ?>
-					<input type="submit" name="action" class="aiovg-button aiovg-button-publish" value="<?php esc_attr_e( 'Publish', 'all-in-one-video-gallery' ); ?>" /> 
+					<input type="submit" name="action" class="aiovg-button aiovg-button-publish" value="<?php esc_attr_e( 'Publish', 'all-in-one-video-gallery' ); ?>" />
 					<input type="submit" name="action" class="aiovg-button aiovg-button-draft" value="<?php esc_attr_e( 'Save Draft', 'all-in-one-video-gallery' ); ?>" />
 				<?php else : ?>
-					<input type="submit" name="action" class="aiovg-button aiovg-button-publish" value="<?php esc_attr_e( 'Save Changes', 'all-in-one-video-gallery' ); ?>" /> 
+					<input type="submit" name="action" class="aiovg-button aiovg-button-publish" value="<?php esc_attr_e( 'Save Changes', 'all-in-one-video-gallery' ); ?>" />
 				<?php endif; ?>
 				&nbsp;
 				<a href="<?php echo aiovg_premium_get_user_dashboard_page_url(); ?>">
 					<?php esc_html_e( 'Cancel', 'all-in-one-video-gallery' ); ?>
 				</a>
 			</div>
-		</div>          
+		</div>
 	</form>
-	
+
 	<form id="aiovg-form-upload" method="post" action="#" enctype="multipart/form-data" style="display: none;">
 		<input type="hidden" name="post_id" value="<?php echo (int) $attributes['post_id']; ?>" />
 		<input type="file" name="media" id="aiovg-upload-media" />
