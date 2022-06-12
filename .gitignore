@@ -1,0 +1,5 @@
+.wp-config.php.swp
+wp-cli.phar
+wp-config.php*
+wp-content/debug.log
+wp-content/uploads
