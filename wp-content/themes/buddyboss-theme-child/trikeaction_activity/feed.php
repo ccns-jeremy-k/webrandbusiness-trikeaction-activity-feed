@@ -61,7 +61,7 @@ class feed
     {
         if (! is_admin() && (! defined('DOING_AJAX') || ! DOING_AJAX)) {
             if ($attrs['hide_comments']) {
-                $this->hide_comments = (bool) $attrs['hide_comments'];
+                $this->hide_comments = (bool)$attrs['hide_comments'];
                 unset($attrs['hide_comments']);
             }
             $this->dataset = BP_Activity_Activity::get($attrs)['activities'];
@@ -123,8 +123,8 @@ class feed
         ?>
         <div class="activity-header">
             <p>
-                <?=$activity->action?>
-                 <a
+                <?= $activity->action ?>
+                <a
                         href="http://localhost:8000/?p=<?= $activity->secondary_item_id ?>"
                         class="view activity-time-since"><span
                     <a
@@ -185,7 +185,7 @@ class feed
                 <?php
                 foreach ($this->dataset as $activity) {
                     ?>
-                    <li class="activity <?=$activity->type?> activity-item wp-link-embed"
+                    <li class="activity <?= $activity->type ?> activity-item wp-link-embed"
                         id="activity-<?= $activity->id ?>" data-bp-activity-id="<?= $activity->id ?>"
                         data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $activity->date_recorded)->getTimestamp()) ?>"
                         data-bp-activity="<?= htmlspecialchars(json_encode($activity)) ?>">
@@ -254,43 +254,52 @@ class feed
         <?php
     }
 
-    private function _get_media_attachment_id($media_id):int
+    private function _get_media_attachment_id($media_id): int
     {
         global $wpdb;
-        return (int) $wpdb->get_results("SELECT attachment_id FROM {$wpdb->prefix}bp_media WHERE id = {$media_id}")[0]->attachment_id;
+        return (int)$wpdb->get_results("SELECT attachment_id FROM {$wpdb->prefix}bp_media WHERE id = {$media_id}")[0]->attachment_id;
     }
 
-    private function _get_activity_comments($activity) {
+    private function _get_activity_comments($activity)
+    {
         global $wpdb;
         $comments = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}bp_activity WHERE item_id = {$activity->id} AND type = 'activity_comment'");
         if (count($comments) > 0) {
             ?>
             <div class="activity-state  has-comments">
-                <a href="<?=$activity->primary_link?>" class="activity-state-comments" style="border: none; color: #787878 !important;">
+                <a href="<?= $activity->primary_link ?>" class="activity-state-comments"
+                   style="border: none; color: #787878 !important;">
 				<span class="comments-count">
-					<?=count($comments)?> Comments </span>
+					<?= count($comments) ?> Comments </span>
                 </a>
             </div>
             <div class="activity-comments">
                 <ul>
                     <?php
                     foreach ($comments as $comment):
-                    ?>
-                    <li id="acomment-<?=$comment->id?>" class=" comment-item" data-bp-activity-comment-id="<?=$comment->id?>">
-                        <?php
+                        ?>
+                        <li id="acomment-<?= $comment->id ?>" class=" comment-item"
+                            data-bp-activity-comment-id="<?= $comment->id ?>">
+                            <?php
                             $user = get_user_by('id', $comment->user_id);
                             $this->get_profile_avatar($comment);
-                        ?>
+                            ?>
 
-                        <div class="acomment-meta">
-                            <a class="author-name" href="<?=$comment->primary_link?>"><?=$user->user_nicename?></a> <a href="http://localhost:8000/news-feed/p/102/#acomment-<?=$comment->id?>" class="activity-time-since"><time class="time-since" datetime="<?=$comment->date_recorded?>" data-bp-timestamp="<?=(DateTime::createFromFormat('Y-m-d H:i:s', $comment->date_recorded)->getTimestamp())?>"><?= bp_core_time_since($activity->date_recorded) ?></time></a>
-                        </div>
+                            <div class="acomment-meta">
+                                <a class="author-name"
+                                   href="<?= $comment->primary_link ?>"><?= $user->user_nicename ?></a> <a
+                                        href="http://localhost:8000/news-feed/p/102/#acomment-<?= $comment->id ?>"
+                                        class="activity-time-since">
+                                    <time class="time-since" datetime="<?= $comment->date_recorded ?>"
+                                          data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $comment->date_recorded)->getTimestamp()) ?>"><?= bp_core_time_since($activity->date_recorded) ?></time>
+                                </a>
+                            </div>
 
-                        <div class="acomment-content">
-                            <?=$comment->content?>
-                        </div>
+                            <div class="acomment-content">
+                                <?= $comment->content ?>
+                            </div>
 
-                    </li>
+                        </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -340,8 +349,8 @@ class feed
             </div>
             <a
                     aria-expanded="false"
-                    href="<?=$activity->primary_link?>">
-            <img src="<?= $image[0] ?>">
+                    href="<?= $activity->primary_link ?>">
+                <img src="<?= $image[0] ?>">
             </a>
         </div>
         <?php
@@ -359,14 +368,14 @@ class feed
 
         <div class="activity-content ">
             <div class="activity-inner ">
-                <p class="activity-discussion-title-wrap"><?=$activity->action?></p>
+                <p class="activity-discussion-title-wrap"><?= $activity->action ?></p>
                 <div class="bb-content-inr-wrap">
-                    <?=$activity->content?>
+                    <?= $activity->content ?>
                 </div>
                 <div class="activity-inner-meta action">
                     <div class="generic-button"><a class="button bb-icon-l bb-icon-comments-square bp-secondary-action"
                                                    aria-expanded="false"
-                                                   href="<?=$activity->primary_link?>"><span
+                                                   href="<?= $activity->primary_link ?>"><span
                                     class="bp-screen-reader-text">Join Discussion</span> <span class="comment-count">Join Discussion</span></a>
                     </div>
                 </div>
@@ -381,8 +390,9 @@ class feed
             </div>
         </div>
         <div class="bp-generic-meta activity-meta action">
-            <div class="generic-button"><a href="http://localhost:8000/news-feed/favorite/<?=$activity->id?>/?_wpnonce=9a8b278147"
-                                           class="button fav bp-secondary-action" aria-pressed="false"><span
+            <div class="generic-button"><a
+                        href="http://localhost:8000/news-feed/favorite/<?= $activity->id ?>/?_wpnonce=9a8b278147"
+                        class="button fav bp-secondary-action" aria-pressed="false"><span
                             class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
         </div>
         <?php
@@ -390,6 +400,15 @@ class feed
 
     private function bbp_topic_create($activity)
     {
+        $content = (strlen($activity->content) <= 160)
+            ? $activity->content
+            : substr($activity->content, 0, 157)."...</p>
+                <p>
+                    <span class=\"activity-read-more\" id=\"activity-read-more-{$activity->id}\"><a target=\"_blank\"
+                                                                                      href=\"{$activity->primary_link}\"
+                                                                                      rel=\"nofollow\"> Read more</a></span>
+                    </p>"
+
         ?>
 
         <div class="bp-activity-head">
@@ -401,9 +420,32 @@ class feed
 
         <div class="activity-content ">
             <div class="activity-inner ">
-                <?=$activity->content?>
+                <p class="activity-discussion-title-wrap"><a
+                            href="http://localhost:8000/forums/discussion/where-do-we-go-from-here/"> Where do we go
+                        from here?</a></p>
+                <div class="bb-content-inr-wrap">
+                    <?=$content?>
+                </div>
+                <div class="activity-inner-meta action">
+                    <div class="generic-button"><a class="button bb-icon-l bb-icon-comments-square bp-secondary-action"
+                                                   aria-expanded="false"
+                                                   href="<?=$activity->primary_link?>"><span
+                                    class="bp-screen-reader-text">Join Discussion</span> <span class="comment-count">Join Discussion</span></a>
+                    </div>
+                    <div class="generic-button"><a class="bb-icon-l button bb-icon-comment bp-secondary-action"
+                                                   data-btn-id="bbp-reply-form"
+                                                   data-topic-title="Where do we go from here?" data-topic-id="<?=$activity->secondary_item_id?>"
+                                                   aria-expanded="false" href="#new-post"
+                                                   data-author-name="Arianna"><span class="bp-screen-reader-text">Quick Reply</span>
+                            <span class="comment-count">Quick Reply</span></a></div>
+                </div>
             </div>
-            </div>
+        </div>
+        <div class="bp-generic-meta activity-meta action">
+            <div class="generic-button"><a href="http://localhost:8000/news-feed/favorite/<?=$activity->id?>/?_wpnonce=9a8b278147"
+                                           class="button fav bp-secondary-action" aria-pressed="false"><span
+                            class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
+        </div>
         <?php
     }
 
