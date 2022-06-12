@@ -400,6 +400,7 @@ class feed
 
     private function bbp_topic_create($activity)
     {
+        $user = get_user_by('id', $activity->user_id);
         $content = (strlen($activity->content) <= 160)
             ? $activity->content
             : substr($activity->content, 0, 157)."...</p>
@@ -436,7 +437,7 @@ class feed
                                                    data-btn-id="bbp-reply-form"
                                                    data-topic-title="Where do we go from here?" data-topic-id="<?=$activity->secondary_item_id?>"
                                                    aria-expanded="false" href="#new-post"
-                                                   data-author-name="Arianna"><span class="bp-screen-reader-text">Quick Reply</span>
+                                                   data-author-name="<?=$user->display_name?>"><span class="bp-screen-reader-text">Quick Reply</span>
                             <span class="comment-count">Quick Reply</span></a></div>
                 </div>
             </div>
