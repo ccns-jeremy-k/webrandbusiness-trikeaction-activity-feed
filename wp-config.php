@@ -225,10 +225,9 @@ if ($configExtra = getenv_docker('WORDPRESS_CONFIG_EXTRA', '')) {
 
 }
 
-
-//define( 'WP_DEBUG', true );
-//define( 'WP_DEBUG_DISPLAY', true );
-//define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_DISPLAY', true );
+define( 'WP_DEBUG_LOG', true );
 /* That's all, stop editing! Happy publishing. */
 
 
