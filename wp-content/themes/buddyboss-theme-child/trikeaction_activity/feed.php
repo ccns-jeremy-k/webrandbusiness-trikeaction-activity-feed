@@ -391,81 +391,19 @@ class feed
     private function bbp_topic_create($activity)
     {
         ?>
-        <div class="bb-activity-more-options-wrap action"><span class="bb-activity-more-options-action"
-                                                                data-balloon-pos="up" data-balloon="More Options"><i
-                        class="bb-icon-f bb-icon-ellipsis-h"></i></span>
-            <div class="bb-activity-more-options">
-                <div class="generic-button"><a href="http://localhost:8000/news-feed/delete/90/?_wpnonce=bab0e918b8"
-                                               class="button item-button bp-secondary-action delete-activity confirm"><span
-                                class="bp-screen-reader-text">Delete</span><span class="delete-label">Delete</span></a>
-                </div>
-            </div>
-        </div>
+
         <div class="bp-activity-head">
-            <div class="activity-avatar item-avatar">
-                <a href="http://localhost:8000/members/bb-arianna/"><img
-                            src="https://clean.trikeaction.com/wp-content/uploads/avatars/0/62781b1d682ff-bpfull.jpg"
-                            class="avatar user-5-avatar avatar-300 photo" width="300" height="300"
-                            alt="Profile photo of Arianna"></a>
-            </div>
-
-            <div class="activity-header">
-                <p><a href="http://localhost:8000/members/bb-arianna/" rel="nofollow">Arianna</a> started a new
-                    discussion in the forum <a href="http://localhost:8000/forums/forum/trike-discussion/">Trike
-                        Discussion</a> <a
-                            href="https://clean.trikeaction.com/forums/discussion/where-do-we-go-from-here/"
-                            class="view activity-time-since"><span class="time-since"
-                                                                   data-livestamp="2022-05-07T03:51:00+0000">5 weeks ago</span></a>
-                </p>
-                <p class="activity-date">
-                    <a href="https://clean.trikeaction.com/forums/discussion/where-do-we-go-from-here/">5 weeks ago</a>
-                </p>
-
-            </div>
+            <?php
+            $this->get_profile_avatar($activity);
+            $this->get_activity_header($activity);
+            ?>
         </div>
-
 
         <div class="activity-content ">
             <div class="activity-inner ">
-                <p class="activity-discussion-title-wrap"><a
-                            href="http://localhost:8000/forums/discussion/where-do-we-go-from-here/"> Where do we go
-                        from here?</a></p>
-                <div class="bb-content-inr-wrap"><p>Lots of options and colors, going to be very hard to decide. Lorem
-                        ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et…</p>
-                    <p><span class="activity-read-more" id="activity-read-more-90"><a target="_blank"
-                                                                                      href="https://clean.trikeaction.com/forums/discussion/where-do-we-go-from-here/"
-                                                                                      rel="nofollow"> Read more</a></span>
-                    </p>
-                </div>
-                <div class="activity-inner-meta action">
-                    <div class="generic-button"><a class="button bb-icon-l bb-icon-comments-square bp-secondary-action"
-                                                   aria-expanded="false"
-                                                   href="http://localhost:8000/forums/discussion/where-do-we-go-from-here/"><span
-                                    class="bp-screen-reader-text">Join Discussion</span> <span class="comment-count">Join Discussion</span></a>
-                    </div>
-                    <div class="generic-button"><a class="bb-icon-l button bb-icon-comment bp-secondary-action"
-                                                   data-btn-id="bbp-reply-form"
-                                                   data-topic-title="Where do we go from here?" data-topic-id="1187"
-                                                   aria-expanded="false" href="#new-post"
-                                                   data-author-name="Arianna"><span class="bp-screen-reader-text">Quick Reply</span>
-                            <span class="comment-count">Quick Reply</span></a></div>
-                </div>
+                <?=$activity->content?>
             </div>
-
-            <div class="activity-state  ">
-                <a href="javascript:void(0);" class="activity-state-likes">
-			<span class="like-text hint--bottom hint--medium hint--multiline" data-hint="">
-							</span>
-                </a>
-                <span class="ac-state-separator">·</span>
             </div>
-        </div>
-        <div class="bp-generic-meta activity-meta action">
-            <div class="generic-button"><a href="http://localhost:8000/news-feed/favorite/90/?_wpnonce=9a8b278147"
-                                           class="button fav bp-secondary-action" aria-pressed="false"><span
-                            class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
-        </div>
         <?php
     }
 
