@@ -3,7 +3,7 @@
 class feed
 {
     private bool $hide_comments = false;
-    private mixed $dataset;
+    private array $dataset;
 
     private array $types = [
         'bbp_reply_create' => 'New Reply',
@@ -496,13 +496,6 @@ class feed
 
         if (! $full) $string = array_slice($string, 0, 1);
         return $string ? implode(', ', $string) . ' ago' : 'just now';
-    }
-
-    public function dd($array)
-    {
-        echo "<pre>";
-        var_dump(htmlspecialchars(json_encode($array, JSON_PRETTY_PRINT)));
-        echo "</pre><br></pre>";
     }
 
     private function get_comments($post_id): object
