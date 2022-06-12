@@ -184,15 +184,17 @@ class feed
             <ul class="activity-list item-list bp-list">
                 <?php
                 foreach ($this->dataset as $activity) {
-//                    var_dump(json_encode($activity, JSON_PRETTY_PRINT));
                     ?>
                     <li class="activity <?=$activity->type?> activity-item wp-link-embed"
                         id="activity-<?= $activity->id ?>" data-bp-activity-id="<?= $activity->id ?>"
                         data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $activity->date_recorded)->getTimestamp()) ?>"
                         data-bp-activity="<?= htmlspecialchars(json_encode($activity)) ?>">
                         <?php
-                        call_user_func(array($this, $activity->type), $activity);
-
+                        if ($activity->type === 'mpp_media_upload') {
+                            $this->activity_update($activity);
+                        } else {
+                            call_user_func(array($this, $activity->type), $activity);
+                        }
                         if (! $this->hide_comments) {
                             $this->_get_activity_comments($activity);
                         }
@@ -343,7 +345,6 @@ class feed
             </a>
         </div>
         <?php
-
     }
 
     private function bbp_reply_create($activity)
