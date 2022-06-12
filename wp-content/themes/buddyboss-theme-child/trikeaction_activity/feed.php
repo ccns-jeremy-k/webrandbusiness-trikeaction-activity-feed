@@ -2,11 +2,8 @@
 
 class feed
 {
-    private $default_avatar;
-    private string $default_user = "Deleted User";
-    private string $order = 'desc';
-    private int $limit = 15;
-    private $dataset;
+    private bool $hide_comments = false;
+    private mixed $dataset;
 
     private array $types = [
         'bbp_reply_create' => 'New Reply',
@@ -63,6 +60,10 @@ class feed
     public function __construct($attrs)
     {
         if (! is_admin() && (! defined('DOING_AJAX') || ! DOING_AJAX)) {
+            if ($attrs['hide_comments']) {
+                $this->hide_comments = (bool) $attrs['hide_comments'];
+                unset($attrs['hide_comments']);
+            }
             $this->dataset = BP_Activity_Activity::get($attrs)['activities'];
             $this->create_activity_timeline();
         }
@@ -190,7 +191,10 @@ class feed
                         data-bp-activity="<?= htmlspecialchars(json_encode($activity)) ?>">
                         <?php
                         call_user_func(array($this, $activity->type), $activity);
-                        $comments = $this->_get_activity_comments($activity);
+
+                        if (! $this->hide_comments) {
+                            $this->_get_activity_comments($activity);
+                        }
                         ?>
 
                     </li>
@@ -259,7 +263,7 @@ class feed
         if (count($comments) > 0) {
             ?>
             <div class="activity-state  has-comments">
-                <a href="<?=$activity->primary_link?>" class="activity-state-comments" style="border: none;">
+                <a href="<?=$activity->primary_link?>" class="activity-state-comments" style="border: none; color: #787878 !important;">
 				<span class="comments-count">
 					<?=count($comments)?> Comments </span>
                 </a>
