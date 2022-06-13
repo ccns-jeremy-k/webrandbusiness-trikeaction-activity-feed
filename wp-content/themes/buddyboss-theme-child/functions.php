@@ -111,6 +111,53 @@ function bp_has_activities_sort_desc($has)
     return $has;
 }
 
+add_action('comment_post', 'create_new_activity', 10, 3);
+function create_new_activity($comment_id, $approved, $commend_data): void
+{
+    $post = get_post($commend_data['comment_post_ID']);
+    if ($post->post_type == 'aiovg_videos') {
+        global $wpdb;
+        $user = get_user_by('ID', bp_loggedin_user_id());
+        $action = "<a href=\"http://localhost:8000/members/{$user->user_nicename}/\">{$user->display_name}</a> commented on Video <a href=\"{$post->guid}\">`{$post->post_title}</a>`";
+        $content = $commend_data['comment_content'];
+        $component = 'activity';
+        $type = "activity_comment";
+        $primary_link = $post->guid;
+        $user_id = bp_loggedin_user_id();
+        $item_id =  $post->ID;
+        $recorded_time = bp_core_current_time();
+        $privacy = 'public';
+        $wpdb->query(
+            $wpdb->prepare(
+                "INSERT INTO {$wpdb->prefix}bp_activity (
+                              user_id, 
+                              component, 
+                              type, 
+                              action, 
+                              content, 
+                              primary_link, 
+                              item_id, 
+                              date_recorded, 
+                              hide_sitewide, 
+                              is_spam, 
+                              privacy)
+                       values (%d, %s, %s, %s, %s, %s, %d, %s, %s, %s, %s)",
+                $user_id,
+                $component,
+                $type,
+                $action,
+                $content,
+                $primary_link,
+                $item_id,
+                $recorded_time,
+                false,
+                false,
+                $privacy
+            )
+        );
+    }
+}
+
 
 include get_stylesheet_directory() . "/trikeaction_activity/trikeaction_activity.php"
 ?>

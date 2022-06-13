@@ -81,7 +81,7 @@ class feed
         }
         ?>
         <div class="activity-avatar item-avatar">
-            <a href="http://localhost:8000/members/<?= $activity->user_nicename ?>/"><img
+            <a href="<?=get_site_url()?>members/<?= $activity->user_nicename ?>/"><img
                         src="<?= $avatar ?>"
                         class="avatar user-8-avatar avatar-300 photo" width="300" height="300"
                         alt="Profile photo of <?= $activity->user_fullname ?>"></a>
@@ -89,44 +89,28 @@ class feed
         <?php
     }
 
-    public function get_activity_option($activity)
-    {
-        ?>
-        <div class="bb-activity-more-options-wrap action">
-            <span class="bb-activity-more-options-action"
-                  data-balloon-pos="up" data-balloon="More Options"><i
-                        class="bb-icon-f bb-icon-ellipsis-h"></i></span>
-            <div class="bb-activity-more-options">
-                <div class="generic-button"><a href="#" class="button edit edit-activity bp-secondary-action bp-tooltip"
-                                               title="Edit Activity"><span
-                                class="bp-screen-reader-text">Edit Activity</span><span
-                                class="edit-label">Edit</span></a></div>
-                <div class="generic-button"><a href="http://localhost:8000/news-feed/delete/137/?_wpnonce=bab0e918b8"
-                                               class="button item-button bp-secondary-action delete-activity confirm"><span
-                                class="bp-screen-reader-text">Delete</span><span class="delete-label">Delete</span></a>
-                </div>
-            </div>
-        </div>
-        <?php
-    }
-
     public function get_activity_header($activity)
     {
+        if ($activity->type === 'activity_comment') {
+            if (str_contains($activity->primary_link, 'aiovg_videos')) {
+                $activity->action = str_replace('photo', 'video', $activity->action);
+            }
+        }
         ?>
         <div class="activity-header">
             <p>
                 <?= $activity->action ?>
-                <a
-                        href="http://localhost:8000/?p=<?= $activity->secondary_item_id ?>"
-                        class="view activity-time-since"><span
+            </p>
+            <p>
                     <a
-                            href="http://localhost:8000/news-feed/p/<?= $activity->id ?>/"
+                            href="<?=get_site_url()?>/news-feed/p/<?= $activity->id ?>/"
                             class="view activity-time-since"><span
                                 class="time-since"
-                                data-livestamp="<?= $activity->date_recorded ?>+0000"><?= bp_core_time_since($activity->date_recorded) ?></span></a>
+                                data-livestamp="<?= $activity->date_recorded ?>+0000"><?= bp_core_time_since($activity->date_recorded) ?></span>
+                    </a>
             </p>
             <p class="activity-date">
-                <a href="http://localhost:8000/?p=<?= $activity->secondary_item_id ?>"><?= bp_core_time_since($activity->date_recorded) ?></span></a>
+                <a href="<?= $activity->primary_link ?>"><?= bp_core_time_since($activity->date_recorded) ?></span></a>
             </p>
 
         </div>
@@ -146,8 +130,8 @@ class feed
                         data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $activity->date_recorded)->getTimestamp()) ?>"
                         data-bp-activity="<?= htmlspecialchars(json_encode($activity)) ?>">
                         <div class="bp-activity-head">
-                            <?=$this->get_profile_avatar($activity)?>
-                            <?=$this->get_activity_header($activity)?>
+                            <?php $this->get_profile_avatar($activity);?>
+                            <?php $this->get_activity_header($activity); ?>
                         </div>
                         <?php
                         if ($activity->type === 'mpp_media_upload') {
@@ -190,7 +174,7 @@ class feed
         </div>
 
         <div class="bp-generic-meta activity-meta action">
-            <div class="generic-button"><a href="http://localhost:8000/news-feed/favorite/<?= $activity->id ?>/"
+            <div class="generic-button"><a href="<?=get_site_url()?>news-feed/favorite/<?= $activity->id ?>/"
                                            class="button fav bp-secondary-action" aria-pressed="false"><span
                             class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
             <div class="generic-button"><a id="acomment-comment-<?= $activity->id ?>"
@@ -238,7 +222,7 @@ class feed
                             <div class="acomment-meta">
                                 <a class="author-name"
                                    href="<?= $comment->primary_link ?>"><?= $user->user_nicename ?></a> <a
-                                        href="http://localhost:8000/news-feed/p/102/#acomment-<?= $comment->id ?>"
+                                        href="<?=get_site_url()?>news-feed/p/102/#acomment-<?= $comment->id ?>"
                                         class="activity-time-since">
                                     <time class="time-since" datetime="<?= $comment->date_recorded ?>"
                                           data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $comment->date_recorded)->getTimestamp()) ?>"><?= bp_core_time_since($activity->date_recorded) ?></time>
@@ -320,7 +304,7 @@ class feed
         </div>
         <div class="bp-generic-meta activity-meta action">
             <div class="generic-button"><a
-                        href="http://localhost:8000/news-feed/favorite/<?= $activity->id ?>/?_wpnonce=9a8b278147"
+                        href="<?=get_site_url()?>news-feed/favorite/<?= $activity->id ?>/?_wpnonce=9a8b278147"
                         class="button fav bp-secondary-action" aria-pressed="false"><span
                             class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
         </div>
@@ -343,7 +327,7 @@ class feed
         <div class="activity-content ">
             <div class="activity-inner ">
                 <p class="activity-discussion-title-wrap"><a
-                            href="http://localhost:8000/forums/discussion/where-do-we-go-from-here/"> Where do we go
+                            href="<?=get_site_url()?>forums/discussion/where-do-we-go-from-here/"> Where do we go
                         from here?</a></p>
                 <div class="bb-content-inr-wrap">
                     <?=$content?>
