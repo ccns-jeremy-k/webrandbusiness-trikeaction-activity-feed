@@ -121,7 +121,7 @@ function create_new_activity($comment_id, $approved, $commend_data): void
         $action = "<a href=\"http://localhost:8000/members/{$user->user_nicename}/\">{$user->display_name}</a> commented on Video <a href=\"{$post->guid}\">`{$post->post_title}</a>`";
         $content = $commend_data['comment_content'];
         $component = 'activity';
-        $type = "activity_comment";
+        $type = "video_comment";
         $primary_link = $post->guid;
         $user_id = bp_loggedin_user_id();
         $item_id =  $post->ID;
