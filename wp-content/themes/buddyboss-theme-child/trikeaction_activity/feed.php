@@ -167,7 +167,7 @@ class feed
 
     }
 
-    private function comment_comment($activity)
+    private function video_comment($activity)
     {
         ?>
         <div class="activity-content ">
