@@ -91,11 +91,11 @@ class feed
 
     public function get_activity_header($activity)
     {
+        if (str_contains($activity->primary_link, 'aiovg_videos')) {
+            $activity->action = str_replace('photo', 'video', $activity->action);
+        }
         if ($activity->type === 'activity_comment') {
-            if (str_contains($activity->primary_link, 'aiovg_videos')) {
-                $activity->action = str_replace('photo', 'video', $activity->action);
-                $activity->link = $activity->secondary_item_id !== 0 ? $activity->primary_link :  "?ac=<?= $activity->id ?>/#ac-form-<?= $activity->id ?>";
-            }
+            $activity->primary_link = get_site_url()."/news-feed/p/$activity->id";
         }
         ?>
         <div class="activity-header">
@@ -104,14 +104,14 @@ class feed
             </p>
             <p>
                     <a
-                            href="<?=$activity->link?>/"
+                            href="<?=$activity->primary_link?>/"
                             class="view activity-time-since"><span
                                 class="time-since"
                                 data-livestamp="<?= $activity->date_recorded ?>+0000"><?= bp_core_time_since($activity->date_recorded) ?></span>
                     </a>
             </p>
             <p class="activity-date">
-                <a href="<?=get_site_url()?>/news-feed/p/<?= $activity->id ?>/"><?= bp_core_time_since($activity->date_recorded) ?></span></a>
+                <a href="<?= $activity->primary_link ?>/"><?= bp_core_time_since($activity->date_recorded) ?></span></a>
             </p>
 
         </div>
