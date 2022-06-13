@@ -101,7 +101,7 @@ class feed
             <p>
                 <?= $activity->action ?>
             </p>
-            <p>
+            <p class="activity-date">
                     <a
                             href="<?=get_site_url()?>/news-feed/p/<?= $activity->id ?>/"
                             class="view activity-time-since"><span
@@ -109,9 +109,7 @@ class feed
                                 data-livestamp="<?= $activity->date_recorded ?>+0000"><?= bp_core_time_since($activity->date_recorded) ?></span>
                     </a>
             </p>
-            <p class="activity-date">
-                <a href="<?= $activity->primary_link ?>"><?= bp_core_time_since($activity->date_recorded) ?></span></a>
-            </p>
+
 
         </div>
         <?php
