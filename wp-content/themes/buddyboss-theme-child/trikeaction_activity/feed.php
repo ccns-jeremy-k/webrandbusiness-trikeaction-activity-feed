@@ -91,11 +91,12 @@ class feed
 
     public function get_activity_header($activity)
     {
+        $image = '';
         if (str_contains($activity->primary_link, 'aiovg_videos')) {
             $activity->action = str_replace('photo', 'video', $activity->action);
         }
-        if ($activity->type === 'activity_comment') {
-            $activity->primary_link = "#";
+        if (in_array($activity->type, ['activity_comment'])) {
+            $activity->primary_link = get_site_url()."/news-feed/p/$activity->item_id/#acomment-$activity->id";
         }
         ?>
         <div class="activity-header">
@@ -111,7 +112,9 @@ class feed
                     </a>
             </p>
             <p class="activity-date">
-                <a href="<?= $activity->primary ?>/"><?= bp_core_time_since($activity->date_recorded) ?></span></a>
+                <a href="<?= $activity->primary_link?>">
+                    <?= bp_core_time_since($activity->date_recorded) ?>
+                </a>
             </p>
 
         </div>
