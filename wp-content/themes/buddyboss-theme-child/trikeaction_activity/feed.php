@@ -101,7 +101,16 @@ class feed
         ?>
         <div class="activity-header">
             <p>
-                <?= $activity->action ?>
+                <?php
+                    switch ($activity->type) {
+                        case 'activity_update':
+                            echo $activity->user_nicename." uploaded a photo"
+                            break;
+                        default:
+                            echo $activity->action
+                            break;
+                    }
+                ?>
             </p>
             <p>
                     <a
@@ -320,12 +329,7 @@ class feed
         $user = get_user_by('id', $activity->user_id);
         $content = (strlen($activity->content) <= 160)
             ? $activity->content
-            : substr($activity->content, 0, 157)."...</p>
-                <p>
-                    <span class=\"activity-read-more\" id=\"activity-read-more-{$activity->id}\"><a target=\"_blank\"
-                                                                                      href=\"{$activity->primary_link}\"
-                                                                                      rel=\"nofollow\"> Read more</a></span>
-                    </p>"
+            : substr($activity->content, 0, 157)."...</p><p><a target=\"_blank\" rel=\"nofollow\"><span class=\"activity-read-more\" id=\"activity-read-more-{$activity->id}\"> Read more </span></a></p>"
 
         ?>
         <div class="activity-content ">
