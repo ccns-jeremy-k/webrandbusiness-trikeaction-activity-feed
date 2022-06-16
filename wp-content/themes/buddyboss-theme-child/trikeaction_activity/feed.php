@@ -5,6 +5,9 @@ class feed
     private bool $hide_comments = false;
     private array $dataset;
 
+    private int $character_limit = 160;
+    private string $character_limit_message = "Continue reading ...";
+
     /**
      * Get activity items, as specified by parameters.
      *
@@ -51,11 +54,22 @@ class feed
 
     public function __construct($attrs)
     {
-        if (! is_admin() && (! defined('DOING_AJAX') || ! DOING_AJAX)) {
+        if (!is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX)) {
             if ($attrs['hide_child_comments']) {
                 $this->hide_comments = (bool)$attrs['hide_child_comments'];
                 unset($attrs['hide_child_comments']);
             }
+
+            if ($attrs['character_limit']) {
+                $this->character_limit = $attrs['character_limit'];
+                unset($attrs['character_limit']);
+            }
+
+            if ($attrs['character_limit_message']) {
+                $this->character_limit_message = $attrs['character_limit_message'];
+                unset($attrs['character_limit_message']);
+            }
+
             $this->dataset = BP_Activity_Activity::get($attrs)['activities'];
             $this->create_activity_timeline();
         }
@@ -74,17 +88,25 @@ class feed
      */
     public function get_profile_avatar($activity)
     {
-        $avatar = get_avatar_url($activity->user_id, array('size' => 300));
+        $avatar = bp_core_fetch_avatar(
+            array(
+                'item_id' => $activity->user_id,
+                'object' => 'user',
+                'type' => 'thumb',
+                'alt' => "User avatar for {$activity->display_name}",
+                'class' => 'avatar user-8-avatar avatar-300 photo',
+                'width' => 300,
+                'height' => 300
+            )
+        );
+
         if (str_contains($avatar, 'no_profile')) {
             global $wpdb;
             $avatar = $wpdb->get_results("SELECT option_value FROM {$wpdb->prefix}options WHERE option_name = 'bp-default-custom-profile-avatar'")[0]->option_value;
         }
         ?>
         <div class="activity-avatar item-avatar">
-            <a href="<?=get_site_url()?>members/<?= $activity->user_nicename ?>/"><img
-                        src="<?= $avatar ?>"
-                        class="avatar user-8-avatar avatar-300 photo" width="300" height="300"
-                        alt="Profile photo of <?= $activity->user_fullname ?>"></a>
+            <a href="<?= get_site_url() ?>members/<?= $activity->user_nicename ?>/"><?=$avatar?></a>
         </div>
         <?php
     }
@@ -95,33 +117,45 @@ class feed
         if (str_contains($activity->primary_link, 'aiovg_videos')) {
             $activity->action = str_replace('photo', 'video', $activity->action);
         }
-        if (in_array($activity->type, ['activity_comment'])) {
-            $activity->primary_link = get_site_url()."/news-feed/p/$activity->item_id/#acomment-$activity->id";
+
+        switch ($activity->type) {
+            case 'activity_update':
+                $activity->action = "<a href=\"" . get_site_url() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> uploaded a photo";
+                $activity->primary_link = get_site_url() . "/news-feed/p/$activity->id/";
+                break;
+            case 'activity_comment':
+                $activity->action = "<a href=\"" . get_site_url() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> commented on a photo";
+                $activity->primary_link = get_site_url() . "/news-feed/p/$activity->item_id/#acomment-$activity->id";
+                break;
+            case 'aiovg_videos':
+                $activity->action = str_replace('photo', 'video', $activity->action);
+                break;
+            case 'bbp_reply_create':
+                $post = get_post($activity->secondary_item_id);
+                $activity->action = "<a href=\"" . get_site_url() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> replied to a discussion <a href='" . $activity->primary_link . "'>" . $post->post_title . "</a>";
+                break;
+            case 'bbp_topic_create':
+                $activity->action = "<a href=\"" . get_site_url() . "\"/members/bb-arianna/>" . $activity->display_name . "</a>";
+                break;
+            default:
+                break;
         }
+
         ?>
         <div class="activity-header">
             <p>
-                <?php
-                    switch ($activity->type) {
-                        case 'activity_update':
-                            echo $activity->user_nicename." uploaded a photo"
-                            break;
-                        default:
-                            echo $activity->action
-                            break;
-                    }
-                ?>
+                <?= $activity->action ?>
             </p>
             <p>
-                    <a
-                            href="<?=$activity->primary_link?>/"
-                            class="view activity-time-since"><span
-                                class="time-since"
-                                data-livestamp="<?= $activity->date_recorded ?>+0000"><?= bp_core_time_since($activity->date_recorded) ?></span>
-                    </a>
+                <a
+                        href="<?= $activity->primary_link ?>/"
+                        class="view activity-time-since"><span
+                            class="time-since"
+                            data-livestamp="<?= $activity->date_recorded ?>+0000"><?= bp_core_time_since($activity->date_recorded) ?></span>
+                </a>
             </p>
             <p class="activity-date">
-                <a href="<?= $activity->primary_link?>">
+                <a href="<?= $activity->primary_link ?>">
                     <?= bp_core_time_since($activity->date_recorded) ?>
                 </a>
             </p>
@@ -137,13 +171,15 @@ class feed
             <ul class="activity-list item-list bp-list">
                 <?php
                 foreach ($this->dataset as $activity) {
+                    $activity->content = $this->_format_content($activity);
+
                     ?>
                     <li class="activity <?= $activity->type ?> activity-item wp-link-embed"
                         id="activity-<?= $activity->id ?>" data-bp-activity-id="<?= $activity->id ?>"
                         data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $activity->date_recorded)->getTimestamp()) ?>"
                         data-bp-activity="<?= htmlspecialchars(json_encode($activity)) ?>">
                         <div class="bp-activity-head">
-                            <?php $this->get_profile_avatar($activity);?>
+                            <?php $this->get_profile_avatar($activity); ?>
                             <?php $this->get_activity_header($activity); ?>
                         </div>
                         <?php
@@ -152,7 +188,7 @@ class feed
                         } else {
                             call_user_func(array($this, $activity->type), $activity);
                         }
-                        if (! $this->hide_comments) {
+                        if ($activity->type !== 'activity_comment' && !$this->hide_comments) {
                             $this->_get_activity_comments($activity);
                         }
                         ?>
@@ -170,11 +206,13 @@ class feed
     private function activity_comment($activity)
     {
         ?>
-            <div class="activity-content ">
-                <div class="activity-inner ">
-                    <?=$activity->content?>
-                </div>
+        <div class="activity-content ">
+            <div class="activity-inner ">
+                <p>
+                    <?= $activity->content ?>
+                </p>
             </div>
+        </div>
         <?php
 
     }
@@ -187,7 +225,7 @@ class feed
         </div>
 
         <div class="bp-generic-meta activity-meta action">
-            <div class="generic-button"><a href="<?=get_site_url()?>news-feed/favorite/<?= $activity->id ?>/"
+            <div class="generic-button"><a href="<?= get_site_url() ?>news-feed/favorite/<?= $activity->id ?>/"
                                            class="button fav bp-secondary-action" aria-pressed="false"><span
                             class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
             <div class="generic-button"><a id="acomment-comment-<?= $activity->id ?>"
@@ -235,7 +273,7 @@ class feed
                             <div class="acomment-meta">
                                 <a class="author-name"
                                    href="<?= $comment->primary_link ?>"><?= $user->user_nicename ?></a> <a
-                                        href="<?=get_site_url()?>news-feed/p/102/#acomment-<?= $comment->id ?>"
+                                        href="<?= get_site_url() ?>news-feed/p/102/#acomment-<?= $comment->id ?>"
                                         class="activity-time-since">
                                     <time class="time-since" datetime="<?= $comment->date_recorded ?>"
                                           data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $comment->date_recorded)->getTimestamp()) ?>"><?= bp_core_time_since($activity->date_recorded) ?></time>
@@ -262,7 +300,9 @@ class feed
 
         <div class="activity-content  media-activity-wrap">
             <div class="activity-inner bb-empty-content">
-                <?= $media['content'] ?? '' ?>
+                <a href="<?=$activity->primary_link?>" target="_blank">
+                    <?= $media['content'] ?? '' ?>
+                </a>
             </div>
         </div>
 
@@ -294,9 +334,8 @@ class feed
         ?>
         <div class="activity-content ">
             <div class="activity-inner ">
-                <p class="activity-discussion-title-wrap"><?= $activity->action ?></p>
                 <div class="bb-content-inr-wrap">
-                    <?= $activity->content ?>
+                    <blockquote><?= $activity->content ?></blockquote>
                 </div>
                 <div class="activity-inner-meta action">
                     <div class="generic-button"><a class="button bb-icon-l bb-icon-comments-square bp-secondary-action"
@@ -317,7 +356,7 @@ class feed
         </div>
         <div class="bp-generic-meta activity-meta action">
             <div class="generic-button"><a
-                        href="<?=get_site_url()?>news-feed/favorite/<?= $activity->id ?>/?_wpnonce=9a8b278147"
+                        href="<?= get_site_url() ?>news-feed/favorite/<?= $activity->id ?>/?_wpnonce=9a8b278147"
                         class="button fav bp-secondary-action" aria-pressed="false"><span
                             class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
         </div>
@@ -327,23 +366,16 @@ class feed
     private function bbp_topic_create($activity)
     {
         $user = get_user_by('id', $activity->user_id);
-        $content = (strlen($activity->content) <= 160)
-            ? $activity->content
-            : substr($activity->content, 0, 157)."...</p><p><a target=\"_blank\" rel=\"nofollow\"><span class=\"activity-read-more\" id=\"activity-read-more-{$activity->id}\"> Read more </span></a></p>"
-
         ?>
         <div class="activity-content ">
             <div class="activity-inner ">
-                <p class="activity-discussion-title-wrap"><a
-                            href="<?=get_site_url()?>forums/discussion/where-do-we-go-from-here/"> Where do we go
-                        from here?</a></p>
                 <div class="bb-content-inr-wrap">
-                    <?=$content?>
+                    <blockquote><?= $activity->content ?></blockquote>
                 </div>
                 <div class="activity-inner-meta action">
                     <div class="generic-button"><a class="button bb-icon-l bb-icon-comments-square bp-secondary-action"
                                                    aria-expanded="false"
-                                                   href="<?=$activity->primary_link?>"><span
+                                                   href="<?= $activity->primary_link ?>"><span
                                     class="bp-screen-reader-text">Join Discussion</span> <span class="comment-count">Join Discussion</span></a>
                     </div>
                 </div>
@@ -379,7 +411,7 @@ class feed
             }
         }
 
-        if (! $full) $string = array_slice($string, 0, 1);
+        if (!$full) $string = array_slice($string, 0, 1);
         return $string ? implode(', ', $string) . ' ago' : 'just now';
     }
 
@@ -397,5 +429,12 @@ class feed
         }
 
         return (object)$video_comments;
+    }
+
+    private function _format_content($activity): string
+    {
+        return strlen($activity->content) >= $this->character_limit
+            ? substr(strip_tags($activity->content), 0, $this->character_limit) . "... <a target=\"_blank\" href=\"" . str_replace(get_site_url(), '/', $activity->primary_link) . "\" rel=\"nofollow\"><span style='color: ##ffca00 !important;' id=\"activity-read-more-{$activity->id}\">{$this->character_limit_message}</span></a>"
+            : $activity->content;
     }
 }

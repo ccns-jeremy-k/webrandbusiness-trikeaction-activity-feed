@@ -118,7 +118,7 @@ function create_new_activity($comment_id, $approved, $commend_data): void
     if ($post->post_type == 'aiovg_videos') {
         global $wpdb;
         $user = get_user_by('ID', bp_loggedin_user_id());
-        $action = "<a href=\"http://localhost:8000/members/{$user->user_nicename}/\">{$user->display_name}</a> commented on Video <a href=\"{$post->guid}\">`{$post->post_title}</a>`";
+        $action = "<a href=\"http://localhost:8000/members/{$user->user_nicename}/\">{$user->display_name}</a> commented on a video <a href=\"{$post->guid}\">`{$post->post_title}</a>`";
         $content = $commend_data['comment_content'];
         $component = 'activity';
         $type = "video_comment";
