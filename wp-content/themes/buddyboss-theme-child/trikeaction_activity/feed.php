@@ -420,11 +420,11 @@ class feed
     {
         switch ($activity->type) {
             case 'activity_update':
-                $activity->action = "<a href=\"" . $this->_get_domain() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> uploaded a photo";
+                $activity->action = "<a href='" . $this->_get_domain() . "members/".$activity->user_nicename."'/>" . $activity->display_name . "</a> uploaded a photo";
                 $activity->primary_link = $this->_get_domain() . "/news-feed/p/$activity->id/";
                 break;
             case 'activity_comment':
-                $activity->action = "<a href=\"" . $this->_get_domain() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> commented on a photo";
+                $activity->action = "<a href='" . $this->_get_domain() . "members/".$activity->user_nicename."'/>" . $activity->display_name . "</a> commented on a photo";
                 $activity->primary_link = $this->_get_domain() . "/news-feed/p/$activity->item_id/#acomment-$activity->id";
                 break;
             case 'aiovg_videos':
@@ -432,10 +432,10 @@ class feed
                 break;
             case 'bbp_reply_create':
                 $post = get_post($activity->secondary_item_id);
-                $activity->action = "<a href=\"" . $this->_get_domain() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> replied to a discussion <a href='" . $activity->primary_link . "'>" . $post->post_title . "</a>";
+                $activity->action = "<a href='" . $this->_get_domain() . "members/".$activity->user_nicename."'/>" . $activity->display_name . "</a> replied to a discussion <a href='" . $activity->primary_link . "'>" . $post->post_title . "</a>";
                 break;
             case 'bbp_topic_create':
-                $activity->action = "<a href=\"" . $this->_get_domain() . "\"/members/bb-arianna/>" . $activity->display_name . "</a>";
+                $activity->action = "<a href='" . $this->_get_domain() . "members/".$activity->user_nicename."'/>" . $activity->display_name . "</a>";
                 break;
             default:
                 break;
@@ -448,7 +448,7 @@ class feed
     private function _format_content($activity): string
     {
         return strlen($activity->content) >= $this->character_limit
-            ? substr(strip_tags($activity->content), 0, $this->character_limit) . "... <a target=\"_blank\" href=\"" . $activity->primary_link . "\" rel=\"nofollow\"><span style='color: ##ffca00 !important;' id=\"activity-read-more-{$activity->id}\">{$this->character_limit_message}</span></a>"
+            ? substr(strip_tags($activity->content), 0, $this->character_limit) . "... <a target='_blank' href='" . $activity->primary_link . "' rel='nofollow'><span style='color: ##ffca00 !important;' id='activity-read-more-{$activity->id}'>{$this->character_limit_message}</span></a>"
             : $activity->content;
     }
 }
