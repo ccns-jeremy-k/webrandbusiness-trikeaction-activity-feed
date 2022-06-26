@@ -60,6 +60,10 @@ class feed
                 unset($attrs['hide_child_comments']);
             }
 
+            if ($attrs['max'] && $attrs['max'] > 25) {
+                $attrs['per_page'] = $attrs['max'];
+            }
+
             if ($attrs['character_limit']) {
                 $this->character_limit = $attrs['character_limit'];
                 unset($attrs['character_limit']);
@@ -106,9 +110,14 @@ class feed
         }
         ?>
         <div class="activity-avatar item-avatar">
-            <a href="<?= get_site_url() ?>members/<?= $activity->user_nicename ?>/"><?=$avatar?></a>
+            <a href="<?= $this->_get_domain() ?>members/<?= $activity->user_nicename ?>/"><?= $avatar ?></a>
         </div>
         <?php
+    }
+
+    private function _get_domain() {
+        $url = get_site_url();
+        return !str_ends_with($url, '/') ? "$url/" : $url;
     }
 
     public function get_activity_header($activity)
@@ -117,30 +126,6 @@ class feed
         if (str_contains($activity->primary_link, 'aiovg_videos')) {
             $activity->action = str_replace('photo', 'video', $activity->action);
         }
-
-        switch ($activity->type) {
-            case 'activity_update':
-                $activity->action = "<a href=\"" . get_site_url() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> uploaded a photo";
-                $activity->primary_link = get_site_url() . "/news-feed/p/$activity->id/";
-                break;
-            case 'activity_comment':
-                $activity->action = "<a href=\"" . get_site_url() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> commented on a photo";
-                $activity->primary_link = get_site_url() . "/news-feed/p/$activity->item_id/#acomment-$activity->id";
-                break;
-            case 'aiovg_videos':
-                $activity->action = str_replace('photo', 'video', $activity->action);
-                break;
-            case 'bbp_reply_create':
-                $post = get_post($activity->secondary_item_id);
-                $activity->action = "<a href=\"" . get_site_url() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> replied to a discussion <a href='" . $activity->primary_link . "'>" . $post->post_title . "</a>";
-                break;
-            case 'bbp_topic_create':
-                $activity->action = "<a href=\"" . get_site_url() . "\"/members/bb-arianna/>" . $activity->display_name . "</a>";
-                break;
-            default:
-                break;
-        }
-
         ?>
         <div class="activity-header">
             <p>
@@ -171,7 +156,7 @@ class feed
             <ul class="activity-list item-list bp-list">
                 <?php
                 foreach ($this->dataset as $activity) {
-                    $activity->content = $this->_format_content($activity);
+                    $activity = $this->_format_activity($activity)
 
                     ?>
                     <li class="activity <?= $activity->type ?> activity-item wp-link-embed"
@@ -225,7 +210,7 @@ class feed
         </div>
 
         <div class="bp-generic-meta activity-meta action">
-            <div class="generic-button"><a href="<?= get_site_url() ?>news-feed/favorite/<?= $activity->id ?>/"
+            <div class="generic-button"><a href="<?= $this->_get_domain() ?>news-feed/favorite/<?= $activity->id ?>/"
                                            class="button fav bp-secondary-action" aria-pressed="false"><span
                             class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
             <div class="generic-button"><a id="acomment-comment-<?= $activity->id ?>"
@@ -273,7 +258,7 @@ class feed
                             <div class="acomment-meta">
                                 <a class="author-name"
                                    href="<?= $comment->primary_link ?>"><?= $user->user_nicename ?></a> <a
-                                        href="<?= get_site_url() ?>news-feed/p/102/#acomment-<?= $comment->id ?>"
+                                        href="<?= $this->_get_domain() ?>news-feed/p/102/#acomment-<?= $comment->id ?>"
                                         class="activity-time-since">
                                     <time class="time-since" datetime="<?= $comment->date_recorded ?>"
                                           data-bp-timestamp="<?= (DateTime::createFromFormat('Y-m-d H:i:s', $comment->date_recorded)->getTimestamp()) ?>"><?= bp_core_time_since($activity->date_recorded) ?></time>
@@ -300,7 +285,7 @@ class feed
 
         <div class="activity-content  media-activity-wrap">
             <div class="activity-inner bb-empty-content">
-                <a href="<?=$activity->primary_link?>" target="_blank">
+                <a href="<?= $activity->primary_link ?>" target="_blank">
                     <?= $media['content'] ?? '' ?>
                 </a>
             </div>
@@ -356,7 +341,7 @@ class feed
         </div>
         <div class="bp-generic-meta activity-meta action">
             <div class="generic-button"><a
-                        href="<?= get_site_url() ?>news-feed/favorite/<?= $activity->id ?>/?_wpnonce=9a8b278147"
+                        href="<?= $this->_get_domain() ?>news-feed/favorite/<?= $activity->id ?>/?_wpnonce=9a8b278147"
                         class="button fav bp-secondary-action" aria-pressed="false"><span
                             class="bp-screen-reader-text">Like</span> <span class="like-count">Like</span></a></div>
         </div>
@@ -431,10 +416,39 @@ class feed
         return (object)$video_comments;
     }
 
+    private function _format_activity($activity): object
+    {
+        switch ($activity->type) {
+            case 'activity_update':
+                $activity->action = "<a href=\"" . $this->_get_domain() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> uploaded a photo";
+                $activity->primary_link = $this->_get_domain() . "/news-feed/p/$activity->id/";
+                break;
+            case 'activity_comment':
+                $activity->action = "<a href=\"" . $this->_get_domain() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> commented on a photo";
+                $activity->primary_link = $this->_get_domain() . "/news-feed/p/$activity->item_id/#acomment-$activity->id";
+                break;
+            case 'aiovg_videos':
+                $activity->action = str_replace('photo', 'video', $activity->action);
+                break;
+            case 'bbp_reply_create':
+                $post = get_post($activity->secondary_item_id);
+                $activity->action = "<a href=\"" . $this->_get_domain() . "\"/members/bb-arianna/>" . $activity->display_name . "</a> replied to a discussion <a href='" . $activity->primary_link . "'>" . $post->post_title . "</a>";
+                break;
+            case 'bbp_topic_create':
+                $activity->action = "<a href=\"" . $this->_get_domain() . "\"/members/bb-arianna/>" . $activity->display_name . "</a>";
+                break;
+            default:
+                break;
+        }
+
+        $activity->content = $this->_format_content($activity);
+        return $activity;
+    }
+
     private function _format_content($activity): string
     {
         return strlen($activity->content) >= $this->character_limit
-            ? substr(strip_tags($activity->content), 0, $this->character_limit) . "... <a target=\"_blank\" href=\"" . str_replace(get_site_url(), '/', $activity->primary_link) . "\" rel=\"nofollow\"><span style='color: ##ffca00 !important;' id=\"activity-read-more-{$activity->id}\">{$this->character_limit_message}</span></a>"
+            ? substr(strip_tags($activity->content), 0, $this->character_limit) . "... <a target=\"_blank\" href=\"" . $activity->primary_link . "\" rel=\"nofollow\"><span style='color: ##ffca00 !important;' id=\"activity-read-more-{$activity->id}\">{$this->character_limit_message}</span></a>"
             : $activity->content;
     }
 }
